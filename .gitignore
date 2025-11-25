@@ -1,0 +1,19 @@
+# Node
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+frontend/.vite/
+
+# Env
+backend/.env
+
+# Uploads
+backend/uploads/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/

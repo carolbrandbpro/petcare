@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400">
+<rect width="800" height="400" fill="#FF7800"/>
+<text x="40" y="70" font-size="36" font-family="Inter, Arial" fill="#fff">PetCare — Components</text>
+<circle cx="120" cy="200" r="50" fill="#fff"/>
+<rect x="200" y="150" width="520" height="40" fill="#fff" rx="8"/>
+</svg>
