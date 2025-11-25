@@ -4,6 +4,7 @@
   "scripts": {
     "start": "npm --prefix backend install && npm --prefix backend start",
     "build": "npm --prefix backend run render-build",
-    "release:tag": "node -e \"const v=(process.env.npm_config_tag||process.argv.slice(1)[0]); if(!v){console.error('Uso: npm run release:tag -- vX.Y.Z'); process.exit(1);} const {execSync}=require('child_process'); execSync(\`git tag -a ${v} -m \"${v}\"\`,{stdio:'inherit'}); execSync(\`git push origin ${v}\`,{stdio:'inherit'});\""
+    "release:tag": "node -e \"const v=(process.env.npm_config_tag||process.argv.slice(1)[0]); if(!v){console.error('Uso: npm run release:tag -- vX.Y.Z'); process.exit(1);} const {execSync}=require('child_process'); execSync(\`git tag -a ${v} -m \"${v}\"\`,{stdio:'inherit'}); execSync(\`git push origin ${v}\`,{stdio:'inherit'});\"",
+    "release:notes": "node -e \"const cp=require('child_process'); const url=cp.execSync('git remote get-url origin').toString().trim(); const m=url.match(/github.com[:\\/](.+?)(\\.git)?$/); if(!m){console.error('Remote origin não é GitHub'); process.exit(1);} const repo=m[1]; const tag=(process.env.npm_config_tag||process.argv.slice(1)[0])||''; const q=tag?`?tag=${tag}`:''; const u=`https://github.com/${repo}/releases/new${q}`; const ps=`Start-Process '${u.replace(/'/g,\"''\")}'`; cp.execSync(`powershell -NoProfile -Command \"${ps}\"`,{stdio:'inherit'});\""
   }
 }
