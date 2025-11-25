@@ -5,8 +5,8 @@ function resolveBaseURL(){
   const host = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
   const port = typeof window !== 'undefined' ? window.location.port : '';
   if(envBase) return envBase; // explicit URL (Render backend, etc.)
-  // Dev: vite at 5173 or proxy at 8080 -> talk to local backend
-  if(port === '5173' || port === '8080') return 'http://localhost:4001';
+  // Dev: vite at 5173/4173 or proxy at 8080 -> talk to local backend
+  if(port === '5173' || port === '4173' || port === '8080') return 'http://localhost:4001';
   // Prod: assume same origin (backend serves frontend)
   return '';
 }
