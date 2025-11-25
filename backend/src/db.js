@@ -3,8 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 const { Pool } = pkg;
 
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1931@localhost:5432/petcare';
+const useSSL = String(process.env.DATABASE_SSL||'').toLowerCase() === 'true';
 export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgres://postgres:1931@localhost:5432/petcare'
+  connectionString,
+  ssl: useSSL ? { rejectUnauthorized: false } : undefined
 });
 
 export default pool;
