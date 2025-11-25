@@ -52,16 +52,66 @@ export default function App(){
         </div>
         {user && (
           <nav className="app-nav desktop-only" style={{display:'flex', gap:8, overflowX:'auto'}}>
-            <NavLink to="/medications" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Medicamentos</NavLink>
-            <NavLink to="/vaccines" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Vacinas</NavLink>
-            <NavLink to="/exams" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Exames</NavLink>
-            <NavLink to="/fleas" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Antipulgas e Carrapatos</NavLink>
-            <NavLink to="/bath" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Banho</NavLink>
-            <NavLink to="/reminders" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Lembretes</NavLink>
-            <NavLink to="/share" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Compartilhar</NavLink>
-            <NavLink to="/consultations" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Consultar</NavLink>
-            <NavLink to="/weight" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Controle de Peso</NavLink>
-            <NavLink to="/hygiene" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Higiene</NavLink>
+            <NavLink to="/medications" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><Pill size={16} /></span>
+                <span>Medicamentos</span>
+              </span>
+            </NavLink>
+            <NavLink to="/vaccines" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><Syringe size={16} /></span>
+                <span>Vacinas</span>
+              </span>
+            </NavLink>
+            <NavLink to="/exams" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><ClipboardList size={16} /></span>
+                <span>Exames</span>
+              </span>
+            </NavLink>
+            <NavLink to="/fleas" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><Bug size={16} /></span>
+                <span>Antipulgas e Carrapatos</span>
+              </span>
+            </NavLink>
+            <NavLink to="/bath" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><Bath size={16} /></span>
+                <span>Banho</span>
+              </span>
+            </NavLink>
+            <NavLink to="/reminders" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><Bell size={16} /></span>
+                <span>Lembretes</span>
+              </span>
+            </NavLink>
+            <NavLink to="/share" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><LinkIcon size={16} /></span>
+                <span>Compartilhar</span>
+              </span>
+            </NavLink>
+            <NavLink to="/consultations" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><CalendarDays size={16} /></span>
+                <span>Consultar</span>
+              </span>
+            </NavLink>
+            <NavLink to="/weight" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><TrendingUp size={16} /></span>
+                <span>Controle de Peso</span>
+              </span>
+            </NavLink>
+            <NavLink to="/hygiene" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>
+              <span className="nav-link" style={{display:'inline-flex', alignItems:'center', gap:6}}>
+                <span className="nav-icon"><Sparkles size={16} /></span>
+                <span>Higiene</span>
+              </span>
+            </NavLink>
             <button onClick={logout} style={{padding:'8px 12px', borderRadius:8, background:'#fff', color:'#000'}}>Sair</button>
           </nav>
         )}
