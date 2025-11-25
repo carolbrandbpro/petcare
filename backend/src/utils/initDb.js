@@ -12,13 +12,17 @@ function parseConn(str){
 export async function initDb(){
   const conn = process.env.DATABASE_URL || 'postgres://postgres:1931@localhost:5432/petcare';
   const { db, base } = parseConn(conn);
-  const admin = new Client({ connectionString: base });
-  await admin.connect();
-  const exists = await admin.query('SELECT 1 FROM pg_database WHERE datname=$1',[db]);
-  if(exists.rowCount===0){
-    await admin.query(`CREATE DATABASE ${db}`);
+  const host = new URL(conn).hostname;
+  const canCreateDb = (host==='localhost' || host==='127.0.0.1');
+  if(canCreateDb){
+    const admin = new Client({ connectionString: base });
+    await admin.connect();
+    const exists = await admin.query('SELECT 1 FROM pg_database WHERE datname=$1',[db]);
+    if(exists.rowCount===0){
+      await admin.query(`CREATE DATABASE ${db}`);
+    }
+    await admin.end();
   }
-  await admin.end();
   const client = new Client({ connectionString: conn });
   await client.connect();
   const sql = fs.readFileSync(path.join(process.cwd(),'src','migrations','initial.sql'),'utf8');
