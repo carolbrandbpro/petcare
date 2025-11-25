@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TABLE organizations (
+CREATE TABLE IF NOT EXISTS organizations (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
   slug text UNIQUE NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE organizations (
   created_at timestamptz DEFAULT now()
 );
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id uuid REFERENCES organizations(id) ON DELETE CASCADE,
   email text UNIQUE NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE users (
   created_at timestamptz DEFAULT now()
 );
 
-CREATE TABLE pets (
+CREATE TABLE IF NOT EXISTS pets (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id uuid REFERENCES organizations(id) ON DELETE CASCADE,
   owner_id uuid REFERENCES users(id),
@@ -33,14 +33,14 @@ CREATE TABLE pets (
   created_at timestamptz DEFAULT now()
 );
 
-CREATE TABLE vaccine_catalog (
+CREATE TABLE IF NOT EXISTS vaccine_catalog (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
   species text,
   default_interval_days int
 );
 
-CREATE TABLE pet_vaccines (
+CREATE TABLE IF NOT EXISTS pet_vaccines (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   pet_id uuid REFERENCES pets(id) ON DELETE CASCADE,
   vaccine_catalog_id uuid REFERENCES vaccine_catalog(id),
@@ -50,7 +50,7 @@ CREATE TABLE pet_vaccines (
   created_at timestamptz DEFAULT now()
 );
 
-CREATE TABLE reminders (
+CREATE TABLE IF NOT EXISTS reminders (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   pet_id uuid REFERENCES pets(id) ON DELETE CASCADE,
   type text,
@@ -64,7 +64,7 @@ CREATE TABLE reminders (
   created_at timestamptz DEFAULT now()
 );
 
-CREATE TABLE appointments (
+CREATE TABLE IF NOT EXISTS appointments (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   pet_id uuid REFERENCES pets(id),
   user_id uuid REFERENCES users(id),
@@ -76,7 +76,7 @@ CREATE TABLE appointments (
   status text DEFAULT 'scheduled'
 );
 
-CREATE TABLE weight_logs (
+CREATE TABLE IF NOT EXISTS weight_logs (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   pet_id uuid REFERENCES pets(id),
   weight_kg numeric,
@@ -84,7 +84,7 @@ CREATE TABLE weight_logs (
   note text
 );
 
-CREATE TABLE user_devices (
+CREATE TABLE IF NOT EXISTS user_devices (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid REFERENCES users(id) ON DELETE CASCADE,
   push_token text,

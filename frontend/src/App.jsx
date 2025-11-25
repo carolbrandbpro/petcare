@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { Pill, Syringe, ClipboardList, Bug, Bath, Bell, Link as LinkIcon, CalendarDays, TrendingUp, Sparkles, Power, Menu as MenuIcon } from 'lucide-react';
 import VaccinesList from './screens/VaccinesList';
 import VaccineAdd from './screens/VaccineAdd';
 import MedicationsList from './screens/MedicationsList';
@@ -45,7 +46,7 @@ export default function App(){
       <header className="app-header">
         <div style={{display:'flex', alignItems:'center', gap:8}}>
           {user && (
-            <button className="btn btn-outline mobile-only" onClick={()=>setIsSideMenuOpen(v=>!v)} style={{padding:'8px 12px'}}>☰</button>
+            <button className="btn btn-outline mobile-only" onClick={()=>setIsSideMenuOpen(v=>!v)} style={{padding:'8px 12px', display:'inline-flex', alignItems:'center', gap:6}}><MenuIcon size={18} /> Menu</button>
           )}
           <Link to="/" style={{color:'#fff', textDecoration:'none'}}><h1 className="app-title">PetCare — Demo</h1></Link>
         </div>
@@ -76,47 +77,47 @@ export default function App(){
         <aside className={`side-menu mobile-only ${isSideMenuOpen ? 'expanded' : 'collapsed'}`}>
           <nav>
             <NavLink to="/medications" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">💊</span>
+              <span className="side-icon"><Pill size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Medicamentos</span>}
             </NavLink>
             <NavLink to="/vaccines" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">💉</span>
+              <span className="side-icon"><Syringe size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Vacinas</span>}
             </NavLink>
             <NavLink to="/exams" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">📋</span>
+              <span className="side-icon"><ClipboardList size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Exames</span>}
             </NavLink>
             <NavLink to="/fleas" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">🐞</span>
+              <span className="side-icon"><Bug size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Antipulgas</span>}
             </NavLink>
             <NavLink to="/bath" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">🛁</span>
+              <span className="side-icon"><Bath size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Banho</span>}
             </NavLink>
             <NavLink to="/reminders" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">🔔</span>
+              <span className="side-icon"><Bell size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Lembretes</span>}
             </NavLink>
             <NavLink to="/share" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">🔗</span>
+              <span className="side-icon"><LinkIcon size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Compartilhar</span>}
             </NavLink>
             <NavLink to="/consultations" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">📅</span>
+              <span className="side-icon"><CalendarDays size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Consultar</span>}
             </NavLink>
             <NavLink to="/weight" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">📈</span>
+              <span className="side-icon"><TrendingUp size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Peso</span>}
             </NavLink>
             <NavLink to="/hygiene" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
-              <span className="side-icon">🧼</span>
+              <span className="side-icon"><Sparkles size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Higiene</span>}
             </NavLink>
             <button className="side-item" onClick={()=>{ setIsSideMenuOpen(false); logout(); }}>
-              <span className="side-icon">⏻</span>
+              <span className="side-icon"><Power size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Sair</span>}
             </button>
           </nav>

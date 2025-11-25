@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import api from '../lib/api';
 
 export default function Login(){
@@ -42,8 +43,8 @@ export default function Login(){
           <span style={{display:'block', fontSize:12, marginBottom:4}}>Senha</span>
           <div style={{display:'flex', alignItems:'center', gap:8}}>
             <input type={showPass ? 'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} style={{flex:1, padding:8, border:'1px solid #ddd', borderRadius:8}} />
-            <button type="button" onClick={()=>setShowPass(v=>!v)} className="btn btn-outline" aria-label="Mostrar/ocultar senha" title={showPass?'Ocultar senha':'Mostrar senha'}>
-              {showPass ? '🙈' : '👁️'}
+            <button type="button" onClick={()=>setShowPass(v=>!v)} className="btn btn-outline" aria-label="Mostrar/ocultar senha" title={showPass?'Ocultar senha':'Mostrar senha'} style={{display:'inline-flex', alignItems:'center', justifyContent:'center'}}>
+              {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
         </label>
