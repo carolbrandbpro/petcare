@@ -11,6 +11,7 @@ import fleaRoutes from './routes/fleas.js';
 import bathRoutes from './routes/bath.js';
 import hygieneRoutes from './routes/hygiene.js';
 import path from 'path';
+import fs from 'fs';
 
 const app = express();
 app.use(cors());
@@ -29,5 +30,16 @@ app.use('/api/bath', bathRoutes);
 app.use('/api/hygiene', hygieneRoutes);
 
 app.get('/', (req,res)=>res.json({ok:true, service:'petcare-backend'}));
+
+// serve frontend build if exists
+try{
+  const dist = path.join(process.cwd(), '..', 'frontend', 'dist');
+  if(fs.existsSync(dist)){
+    app.use(express.static(dist));
+    app.get('*', (req,res)=>{
+      res.sendFile(path.join(dist, 'index.html'));
+    });
+  }
+}catch(e){ /* optional */ }
 
 export default app;

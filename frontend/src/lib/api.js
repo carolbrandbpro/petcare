@@ -3,12 +3,12 @@ import axios from 'axios';
 function resolveBaseURL(){
   const envBase = import.meta.env.VITE_API_URL;
   const host = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
-  let apiBase = envBase || `http://${host}:4001`;
-  if(envBase && envBase.includes('backend')){
-    if(host === 'localhost' || host.startsWith('172.')) apiBase = 'http://localhost:4001';
-  }
-  if(host.startsWith('172.')) apiBase = 'http://localhost:4001';
-  return apiBase;
+  const port = typeof window !== 'undefined' ? window.location.port : '';
+  if(envBase) return envBase; // explicit URL (Render backend, etc.)
+  // Dev: vite at 5173 or proxy at 8080 -> talk to local backend
+  if(port === '5173' || port === '8080') return 'http://localhost:4001';
+  // Prod: assume same origin (backend serves frontend)
+  return '';
 }
 
 const api = axios.create({ baseURL: resolveBaseURL() });
