@@ -9,7 +9,7 @@
     "worker": "node src/jobs/scheduler.js",
     "dev:all": "concurrently \"npm run dev\" \"npm --prefix ../frontend run dev\"",
     "build:frontend": "npm --prefix ../frontend install && npm --prefix ../frontend run build",
-    "render-build": "npm --prefix ../frontend ci && npm --prefix ../frontend run build && npm ci"
+    "render-build": "npm --prefix ../frontend install && npm --prefix ../frontend run build && npm install"
   },
   "dependencies": {
     "express": "^4.18.2",
