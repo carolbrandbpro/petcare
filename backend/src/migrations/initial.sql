@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS users (
   created_at timestamptz DEFAULT now()
 );
 
+ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url text;
+
 CREATE TABLE IF NOT EXISTS pets (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id uuid REFERENCES organizations(id) ON DELETE CASCADE,

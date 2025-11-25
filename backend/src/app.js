@@ -10,6 +10,7 @@ import appointmentRoutes from './routes/appointments.js';
 import fleaRoutes from './routes/fleas.js';
 import bathRoutes from './routes/bath.js';
 import hygieneRoutes from './routes/hygiene.js';
+import userRoutes from './routes/users.js';
 import path from 'path';
 import fs from 'fs';
 
@@ -28,6 +29,7 @@ app.use('/api/appointments', appointmentRoutes);
 app.use('/api/fleas', fleaRoutes);
 app.use('/api/bath', bathRoutes);
 app.use('/api/hygiene', hygieneRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req,res)=>res.json({ok:true, service:'petcare-backend'}));
 
