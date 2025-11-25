@@ -23,7 +23,7 @@ export default function VaccinesList(){
     <div style={{display:'grid', gap:12}}>
       <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
         <div style={{fontSize:18, fontWeight:600}}>Vacinas</div>
-        <a href="/vaccines/new" style={{background:'#FF7A00', color:'#fff', padding:'8px 12px', borderRadius:8}}>Adicionar</a>
+        <a href="/vaccines/new" className="btn btn-primary">Adicionar</a>
       </div>
       {!petId && <div style={{color:'#c00'}}>Informe o Pet ID no topo.</div>}
       {loading && <div>Carregando...</div>}
@@ -39,7 +39,7 @@ export default function VaccinesList(){
           </div>
         </div>
       ))}
-      {!loading && items.length===0 && petId && <div style={{color:'#555'}}>Sem registros de vacina.</div>}
+      {!loading && items.length===0 && petId && <div className="card" style={{color:'#555'}}>Sem registros de vacina.</div>}
     </div>
   );
 }

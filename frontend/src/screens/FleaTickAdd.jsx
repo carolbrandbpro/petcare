@@ -17,7 +17,8 @@ export default function FleaTickAdd(){
   }
 
   return (
-    <div style={{maxWidth:560, background:'#fff', borderRadius:12, boxShadow:'0 8px 24px rgba(0,0,0,0.08)', padding:16}}>
+    <div className="page-center">
+      <div className="card form-wrap">
       <div style={{fontSize:18, fontWeight:600, marginBottom:12}}>Adicionar Antipulgas/Carrapatos</div>
       <label style={{display:'block', marginBottom:8}}>
         <span style={{display:'block', fontSize:12, marginBottom:4}}>Produto</span>
@@ -39,8 +40,9 @@ export default function FleaTickAdd(){
         <textarea value={notes} onChange={e=>setNotes(e.target.value)} style={{width:'100%', padding:8, border:'1px solid #ddd', borderRadius:8}} />
       </label>
       <div style={{display:'flex', gap:8, marginTop:8}}>
-        <button onClick={save} style={{background:'#FF7A00', color:'#fff', padding:'8px 12px', borderRadius:8}}>Salvar</button>
-        <a href="/fleas" style={{background:'#fff', border:'1px solid #ddd', padding:'8px 12px', borderRadius:8}}>Cancelar</a>
+        <button onClick={save} className="btn btn-primary">Salvar</button>
+        <a href="/fleas" className="btn btn-outline">Cancelar</a>
+      </div>
       </div>
     </div>
   );
