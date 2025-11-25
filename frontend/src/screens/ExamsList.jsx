@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
+import api from '../lib/api';
 
 export default function ExamsList(){
   const [items, setItems] = useState([]);
@@ -16,7 +15,7 @@ export default function ExamsList(){
       if(!petId) return;
       setLoading(true);
       try{
-        const r = await axios.get(`/api/exams/${petId}`);
+        const r = await api.get(`/api/exams/${petId}`);
         setItems(r.data || []);
       } finally { setLoading(false); }
     }
@@ -47,7 +46,7 @@ export default function ExamsList(){
                     ) : (
                       <a href={f.url} target="_blank" rel="noreferrer" style={{fontSize:12, background:'#fff', border:'1px solid #ddd', padding:'6px 10px', borderRadius:8, display:'inline-block'}}>{f.name}</a>
                     )}
-                    <button onClick={async()=>{ const r=await axios.delete(`/api/exams/${i.id}/files`, { data: { name: f.name }}); setItems(items.map(x=>x.id===i.id?r.data:x)); }} style={{fontSize:12, background:'#ffe6e6', color:'#a00', padding:'6px 10px', borderRadius:8}}>Remover</button>
+                    <button onClick={async()=>{ const r=await api.delete(`/api/exams/${i.id}/files`, { data: { name: f.name }}); setItems(items.map(x=>x.id===i.id?r.data:x)); }} style={{fontSize:12, background:'#ffe6e6', color:'#a00', padding:'6px 10px', borderRadius:8}}>Remover</button>
                   </div>
                 ))}
               </div>
@@ -55,7 +54,7 @@ export default function ExamsList(){
           )}
           <div style={{display:'flex', gap:8, marginTop:8}}>
             <button onClick={()=>{ setEditing(i.id); setForm({ title:i.title||'', exam_date:i.exam_date||'', notes:i.notes||'' }); }} style={{background:'#fff', border:'1px solid #ddd', padding:'6px 10px', borderRadius:8}}>Editar</button>
-            <button onClick={async()=>{ if(!confirm('Excluir este exame?')) return; await axios.delete(`/api/exams/${i.id}`); setItems(items.filter(x=>x.id!==i.id)); }} style={{background:'#ffe6e6', color:'#a00', padding:'6px 10px', borderRadius:8}}>Excluir</button>
+            <button onClick={async()=>{ if(!confirm('Excluir este exame?')) return; await api.delete(`/api/exams/${i.id}`); setItems(items.filter(x=>x.id!==i.id)); }} style={{background:'#ffe6e6', color:'#a00', padding:'6px 10px', borderRadius:8}}>Excluir</button>
           </div>
           <div style={{display:'grid', gap:6, marginTop:8}}>
             <div style={{fontSize:12}}>Adicionar arquivo</div>
@@ -72,7 +71,7 @@ export default function ExamsList(){
                 const fr = new FileReader();
                 fr.onload = async ()=>{
                   const content = fr.result;
-                  const r = await axios.post(`/api/exams/${i.id}/files`, { name: uploadName, content });
+                  const r = await api.post(`/api/exams/${i.id}/files`, { name: uploadName, content });
                   setItems(items.map(x=>x.id===i.id?r.data:x));
                   setUploadFile(null); setUploadName('');
                 };
@@ -95,7 +94,7 @@ export default function ExamsList(){
                 <textarea value={form.notes} onChange={e=>setForm({...form, notes:e.target.value})} style={{width:'100%', padding:8, border:'1px solid #ddd', borderRadius:8}} />
               </label>
               <div style={{display:'flex', gap:8}}>
-                <button onClick={async()=>{ const r=await axios.put(`/api/exams/${i.id}`, form); setItems(items.map(x=>x.id===i.id?r.data:x)); setEditing(null); }} style={{background:'#FF7A00', color:'#fff', padding:'6px 10px', borderRadius:8}}>Salvar</button>
+                <button onClick={async()=>{ const r=await api.put(`/api/exams/${i.id}`, form); setItems(items.map(x=>x.id===i.id?r.data:x)); setEditing(null); }} style={{background:'#FF7A00', color:'#fff', padding:'6px 10px', borderRadius:8}}>Salvar</button>
                 <button onClick={()=>setEditing(null)} style={{background:'#fff', border:'1px solid #ddd', padding:'6px 10px', borderRadius:8}}>Cancelar</button>
               </div>
             </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
+import api from '../lib/api';
 
 export default function PetAdd(){
   const [name, setName] = useState('');
@@ -11,7 +10,7 @@ export default function PetAdd(){
   async function save(){
     try{
       const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-      const r = await axios.post('/api/pets', { name, species, breed, birth_date: birth }, token ? { headers: { Authorization: `Bearer ${token}` } } : undefined);
+      const r = await api.post('/api/pets', { name, species, breed, birth_date: birth });
       const pet = r.data;
       localStorage.setItem('petId', pet.id);
       alert('Pet criado');

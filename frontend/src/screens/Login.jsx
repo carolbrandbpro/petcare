@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
+import api from '../lib/api';
 
 export default function Login(){
   const [email, setEmail] = useState('');
@@ -13,11 +12,11 @@ export default function Login(){
     e.preventDefault();
     setLoading(true);
     try{
-      const r = await axios.post('/api/auth/login', { email, password });
+      const r = await api.post('/api/auth/login', { email, password });
       const { token, user } = r.data;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setMsg('Login realizado com sucesso');
       setMsgType('success');
       setTimeout(()=>{ window.location.href = '/vaccines'; }, 700);

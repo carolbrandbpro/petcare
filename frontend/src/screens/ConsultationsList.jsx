@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
+import api from '../lib/api';
 
 export default function ConsultationsList(){
   const [items, setItems] = useState([]);
@@ -14,7 +13,7 @@ export default function ConsultationsList(){
       if(!petId) return;
       setLoading(true);
       try{
-        const r = await axios.get(`/api/appointments/${petId}`);
+        const r = await api.get(`/api/appointments/${petId}`);
         setItems(r.data || []);
       } finally { setLoading(false); }
     }
@@ -36,7 +35,7 @@ export default function ConsultationsList(){
           {i.description && <div style={{fontSize:12}}>{i.description}</div>}
           <div style={{display:'flex', gap:8, marginTop:8}}>
             <button onClick={()=>{ setEditing(i.id); setForm({ title:i.title||'', start_at:i.start_at?i.start_at.slice(0,16):'', location:i.location||'', description:i.description||'' }); }} style={{background:'#fff', border:'1px solid #ddd', padding:'6px 10px', borderRadius:8}}>Editar</button>
-            <button onClick={async()=>{ if(!confirm('Excluir esta consulta?')) return; await axios.delete(`/api/appointments/${i.id}`); setItems(items.filter(x=>x.id!==i.id)); }} style={{background:'#ffe6e6', color:'#a00', padding:'6px 10px', borderRadius:8}}>Excluir</button>
+            <button onClick={async()=>{ if(!confirm('Excluir esta consulta?')) return; await api.delete(`/api/appointments/${i.id}`); setItems(items.filter(x=>x.id!==i.id)); }} style={{background:'#ffe6e6', color:'#a00', padding:'6px 10px', borderRadius:8}}>Excluir</button>
           </div>
           {editing===i.id && (
             <div style={{marginTop:12, display:'grid', gap:8}}>
@@ -57,7 +56,7 @@ export default function ConsultationsList(){
                 <textarea value={form.description} onChange={e=>setForm({...form, description:e.target.value})} style={{width:'100%', padding:8, border:'1px solid #ddd', borderRadius:8}} />
               </label>
               <div style={{display:'flex', gap:8}}>
-                <button onClick={async()=>{ const r=await axios.put(`/api/appointments/${i.id}`, form); setItems(items.map(x=>x.id===i.id?r.data:x)); setEditing(null); }} style={{background:'#FF7A00', color:'#fff', padding:'6px 10px', borderRadius:8}}>Salvar</button>
+                <button onClick={async()=>{ const r=await api.put(`/api/appointments/${i.id}`, form); setItems(items.map(x=>x.id===i.id?r.data:x)); setEditing(null); }} style={{background:'#FF7A00', color:'#fff', padding:'6px 10px', borderRadius:8}}>Salvar</button>
                 <button onClick={()=>setEditing(null)} style={{background:'#fff', border:'1px solid #ddd', padding:'6px 10px', borderRadius:8}}>Cancelar</button>
               </div>
             </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
+import api from '../lib/api';
 
 export default function VaccineAdd(){
   const [vaccineId, setVaccineId] = useState('');
@@ -11,7 +10,7 @@ export default function VaccineAdd(){
   async function save(){
     if(!petId){ alert('Informe o Pet ID no topo'); return; }
     if(!vaccineId || !appliedDate){ alert('Preencha vacina e data'); return; }
-    await axios.post(`/api/vaccines/${petId}`, { vaccine_catalog_id: vaccineId, applied_date: appliedDate, notes });
+    await api.post(`/api/vaccines/${petId}`, { vaccine_catalog_id: vaccineId, applied_date: appliedDate, notes });
     alert('Vacina salva'); window.location.href = '/vaccines';
   }
 

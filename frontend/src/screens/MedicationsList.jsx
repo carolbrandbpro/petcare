@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
+import api from '../lib/api';
 
 export default function MedicationsList(){
   const [items, setItems] = useState([]);
@@ -12,7 +11,7 @@ export default function MedicationsList(){
       if(!petId) return;
       setLoading(true);
       try{
-        const r = await axios.get(`/api/medications/${petId}`);
+        const r = await api.get(`/api/medications/${petId}`);
         setItems(r.data || []);
       } finally { setLoading(false); }
     }

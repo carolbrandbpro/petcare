@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
+import api from '../lib/api';
 
 export default function ConsultationAdd(){
   const [title, setTitle] = useState('Consulta');
@@ -12,7 +11,7 @@ export default function ConsultationAdd(){
   async function save(){
     if(!petId){ alert('Informe o Pet ID no topo'); return; }
     if(!title || !startAt){ alert('Preencha título e data/hora'); return; }
-    await axios.post(`/api/appointments/${petId}`, { title, description, start_at: startAt, location });
+    await api.post(`/api/appointments/${petId}`, { title, description, start_at: startAt, location });
     alert('Consulta salva'); window.location.href = '/consultations';
   }
 
