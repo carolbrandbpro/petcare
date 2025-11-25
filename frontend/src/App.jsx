@@ -25,6 +25,7 @@ import ConsultationAdd from './screens/ConsultationAdd';
 export default function App(){ 
   const [petId, setPetId] = useState('');
   const [user, setUser] = useState(null);
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   useEffect(()=>{ 
     const v = localStorage.getItem('petId'); if(v) setPetId(v);
     const t = localStorage.getItem('token');
@@ -40,11 +41,16 @@ export default function App(){
   function handlePetIdChange(e){ const v = e.target.value; setPetId(v); localStorage.setItem('petId', v); }
   function logout(){ localStorage.removeItem('token'); localStorage.removeItem('user'); delete axios.defaults.headers.common['Authorization']; setUser(null); }
   return (
-    <div style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
+    <div className={`app-shell ${isSideMenuOpen ? 'menu-expanded' : ''}`} style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
       <header className="app-header">
-        <Link to="/" style={{color:'#fff', textDecoration:'none'}}><h1 className="app-title">PetCare — Demo</h1></Link>
+        <div style={{display:'flex', alignItems:'center', gap:8}}>
+          {user && (
+            <button className="btn btn-outline mobile-only" onClick={()=>setIsSideMenuOpen(v=>!v)} style={{padding:'8px 12px'}}>☰</button>
+          )}
+          <Link to="/" style={{color:'#fff', textDecoration:'none'}}><h1 className="app-title">PetCare — Demo</h1></Link>
+        </div>
         {user && (
-          <nav className="app-nav" style={{display:'flex', gap:8, overflowX:'auto'}}>
+          <nav className="app-nav desktop-only" style={{display:'flex', gap:8, overflowX:'auto'}}>
             <NavLink to="/medications" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Medicamentos</NavLink>
             <NavLink to="/vaccines" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Vacinas</NavLink>
             <NavLink to="/exams" style={({isActive})=>({padding:'8px 12px', borderRadius:8, background:isActive?'#fff':'transparent', color:isActive?'#000':'#fff'})}>Exames</NavLink>
@@ -66,6 +72,56 @@ export default function App(){
           </div>
         )}
       </header>
+      {user && (
+        <aside className={`side-menu mobile-only ${isSideMenuOpen ? 'expanded' : 'collapsed'}`}>
+          <nav>
+            <NavLink to="/medications" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">💊</span>
+              {isSideMenuOpen && <span className="side-label">Medicamentos</span>}
+            </NavLink>
+            <NavLink to="/vaccines" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">💉</span>
+              {isSideMenuOpen && <span className="side-label">Vacinas</span>}
+            </NavLink>
+            <NavLink to="/exams" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">📋</span>
+              {isSideMenuOpen && <span className="side-label">Exames</span>}
+            </NavLink>
+            <NavLink to="/fleas" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">🐞</span>
+              {isSideMenuOpen && <span className="side-label">Antipulgas</span>}
+            </NavLink>
+            <NavLink to="/bath" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">🛁</span>
+              {isSideMenuOpen && <span className="side-label">Banho</span>}
+            </NavLink>
+            <NavLink to="/reminders" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">🔔</span>
+              {isSideMenuOpen && <span className="side-label">Lembretes</span>}
+            </NavLink>
+            <NavLink to="/share" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">🔗</span>
+              {isSideMenuOpen && <span className="side-label">Compartilhar</span>}
+            </NavLink>
+            <NavLink to="/consultations" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">📅</span>
+              {isSideMenuOpen && <span className="side-label">Consultar</span>}
+            </NavLink>
+            <NavLink to="/weight" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">📈</span>
+              {isSideMenuOpen && <span className="side-label">Peso</span>}
+            </NavLink>
+            <NavLink to="/hygiene" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>setIsSideMenuOpen(false)}>
+              <span className="side-icon">🧼</span>
+              {isSideMenuOpen && <span className="side-label">Higiene</span>}
+            </NavLink>
+            <button className="side-item" onClick={()=>{ setIsSideMenuOpen(false); logout(); }}>
+              <span className="side-icon">⏻</span>
+              {isSideMenuOpen && <span className="side-label">Sair</span>}
+            </button>
+          </nav>
+        </aside>
+      )}
       <main style={{marginTop:20}}>
         <Routes>
           <Route path="/" element={<Login />} />

@@ -4,6 +4,7 @@ import api from '../lib/api';
 export default function Login(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState('');
   const [msgType, setMsgType] = useState('');
@@ -39,7 +40,12 @@ export default function Login(){
         </label>
         <label style={{display:'block', marginBottom:12}}>
           <span style={{display:'block', fontSize:12, marginBottom:4}}>Senha</span>
-          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} style={{width:'100%', padding:8, border:'1px solid #ddd', borderRadius:8}} />
+          <div style={{display:'flex', alignItems:'center', gap:8}}>
+            <input type={showPass ? 'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} style={{flex:1, padding:8, border:'1px solid #ddd', borderRadius:8}} />
+            <button type="button" onClick={()=>setShowPass(v=>!v)} className="btn btn-outline" aria-label="Mostrar/ocultar senha" title={showPass?'Ocultar senha':'Mostrar senha'}>
+              {showPass ? '🙈' : '👁️'}
+            </button>
+          </div>
         </label>
       <button disabled={loading} className="btn btn-primary" style={{width:'100%'}}>{loading?'Entrando...':'Entrar'}</button>
       </form>
