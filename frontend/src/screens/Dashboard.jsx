@@ -1,4 +1,5 @@
 import React from 'react';
+import { CalendarDays } from 'lucide-react';
 
 export default function Dashboard(){
   const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')||'null') : null;
@@ -20,7 +21,7 @@ export default function Dashboard(){
       <section style={{background:'#f3f3f3', padding:14, borderRadius:12}}>
         <div style={{fontSize:18, fontWeight:700, color:'#FF7A00', marginBottom:10}}>Eventos Agendados</div>
         <div className="card" style={{display:'flex', alignItems:'center', gap:10}}>
-          <span style={{color:'#FF7A00', fontSize:20}}>☑</span>
+          <span style={{color:'#FF7A00', fontSize:20}}><CalendarDays size={20} /></span>
           <span>Parece que você não tem nenhum evento agendado.</span>
         </div>
       </section>
