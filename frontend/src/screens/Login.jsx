@@ -21,7 +21,7 @@ export default function Login(){
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setMsg('Login realizado com sucesso');
       setMsgType('success');
-      setTimeout(()=>{ window.location.href = '/vaccines'; }, 700);
+      setTimeout(()=>{ window.location.href = '/dashboard'; }, 700);
     }catch(err){
       const code = err?.response?.data?.error;
       if(code==='too_many_attempts'){

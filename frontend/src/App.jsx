@@ -8,6 +8,9 @@ import VaccineAdd from './screens/VaccineAdd';
 import MedicationsList from './screens/MedicationsList';
 import MedicationAdd from './screens/MedicationAdd';
 import Login from './screens/Login';
+import Welcome from './screens/Welcome';
+import Register from './screens/Register';
+import Dashboard from './screens/Dashboard';
 import Home from './screens/Home';
 import ExamsList from './screens/ExamsList';
 import ExamAdd from './screens/ExamAdd';
@@ -31,7 +34,7 @@ export default function App(){
   const [isMobile, setIsMobile] = useState(false);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchDeltaX, setTouchDeltaX] = useState(0);
-  const isLoginRoute = (typeof window !== 'undefined') && (window.location.pathname === '/login' || window.location.pathname === '/');
+  const isLoginRoute = (typeof window !== 'undefined') && ([ '/', '/login', '/register' ].includes(window.location.pathname));
   useEffect(()=>{ 
     const v = localStorage.getItem('petId'); if(v) setPetId(v);
     const t = localStorage.getItem('token');
@@ -166,7 +169,7 @@ export default function App(){
           </div>
         )}
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Welcome />} />
           <Route path="/vaccines" element={<RequireAuth><VaccinesList /></RequireAuth>} />
           <Route path="/vaccines/new" element={<RequireAuth><VaccineAdd /></RequireAuth>} />
           <Route path="/medications" element={<RequireAuth><MedicationsList /></RequireAuth>} />
@@ -186,8 +189,10 @@ export default function App(){
           <Route path="/pets/new" element={<RequireAuth><PetAdd /></RequireAuth>} />
           <Route path="/reminders" element={<RequireAuth><RemindersList /></RequireAuth>} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
-          <Route path="*" element={<Login />} />
+          <Route path="*" element={<Welcome />} />
         </Routes>
       </main>
     </div>

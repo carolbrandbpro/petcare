@@ -36,11 +36,11 @@ function registerFailure(key){
 function clearAttempts(key){ loginAttempts.delete(key); }
 
 router.post('/register', async (req,res)=>{
-  const { email, password, name } = req.body;
+  const { email, password, name, phone } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const r = await pool.query(
-    'INSERT INTO users (email, password_hash, name) VALUES ($1,$2,$3) RETURNING id,email,name',
-    [email, hash, name]
+    'INSERT INTO users (email, password_hash, name, phone) VALUES ($1,$2,$3,$4) RETURNING id,email,name,phone',
+    [email, hash, name, phone || null]
   );
   res.status(201).json(r.rows[0]);
 });
@@ -56,11 +56,7 @@ router.post('/login', async (req,res)=>{
     res.setHeader('Retry-After', String(retryAfterSec));
     return res.status(429).json({ error: 'too_many_attempts', retryAfterSeconds: retryAfterSec });
   }
-  if((email==='admin@admin.com' || email==='admin@local') && password==='admin'){
-    const token = jwt.sign({id:'admin-demo'}, process.env.JWT_SECRET || 'devsecret', {expiresIn: JWT_TTL});
-    clearAttempts(key);
-    return res.json({ token, user: { id: 'admin-demo', email, name: 'Admin' }});
-  }
+  // fluxo único baseado no banco (remove id estático 'admin-demo')
   try{
     const r = await pool.query('SELECT * FROM users WHERE email=$1', [email]);
     const user = r.rows[0];
