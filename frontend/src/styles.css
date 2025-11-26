@@ -77,3 +77,14 @@ body { font-family: Inter, system-ui, Arial; }
 }
 
 .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.38); z-index: 900; }
+
+/* Login mobile layout */
+.app-shell.login-shell .form-wrap { max-width: 480px; }
+@media (max-width: 768px) {
+  .app-shell.login-shell .form-wrap { max-width: 92vw; }
+}
+@media (max-width: 480px) {
+  .app-shell.login-shell .form-wrap { max-width: 94vw; }
+  .app-shell.login-shell .card { padding: 14px; }
+  .app-shell.login-shell .page-center { padding: 12px; }
+}
