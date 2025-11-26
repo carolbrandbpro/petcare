@@ -51,9 +51,9 @@ export default function Login(){
         </label>
         <label style={{display:'block', marginBottom:12}}>
           <span style={{display:'block', fontSize:12, marginBottom:4}}>Senha</span>
-          <div style={{display:'flex', alignItems:'center', gap:8}}>
-            <input type={showPass ? 'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} style={{flex:1, padding:8, border:'1px solid #ddd', borderRadius:8}} />
-            <button type="button" onClick={()=>setShowPass(v=>!v)} className="btn btn-outline" aria-label="Mostrar/ocultar senha" title={showPass?'Ocultar senha':'Mostrar senha'} style={{display:'inline-flex', alignItems:'center', justifyContent:'center'}}>
+          <div style={{position:'relative'}}>
+            <input type={showPass ? 'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} style={{width:'100%', padding:'8px 38px 8px 8px', border:'1px solid #ddd', borderRadius:8}} />
+            <button type="button" onClick={()=>setShowPass(v=>!v)} aria-label="Mostrar/ocultar senha" title={showPass?'Ocultar senha':'Mostrar senha'} style={{position:'absolute', right:8, top:'50%', transform:'translateY(-50%)', background:'transparent', border:'none', padding:4, display:'inline-flex', alignItems:'center', justifyContent:'center'}}>
               {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
