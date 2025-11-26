@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
+import { Routes, Route, Link, NavLink, Navigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Pill, Syringe, ClipboardList, Bug, Bath, Bell, Link as LinkIcon, CalendarDays, TrendingUp, Sparkles, Power, Menu as MenuIcon, User } from 'lucide-react';
 import Profile from './screens/Profile';
@@ -68,6 +68,7 @@ export default function App(){
   function logout(){ localStorage.removeItem('token'); localStorage.removeItem('user'); delete axios.defaults.headers.common['Authorization']; setUser(null); }
   return (
     <div className={`app-shell ${isSideMenuOpen ? 'menu-expanded' : 'menu-collapsed'}`} style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
+      {!isLoginRoute && (
       <header className="app-header">
         <div style={{display:'flex', alignItems:'center', gap:8}}>
           {user && (
@@ -85,6 +86,7 @@ export default function App(){
           </div>
         )}
       </header>
+      )}
       {user && (
         <aside className={`side-menu ${isSideMenuOpen ? 'expanded' : 'collapsed'}`}
           onTouchStart={(e)=>{ if(!isMobile || !isSideMenuOpen) return; setTouchStartX(e.touches[0].clientX); setTouchDeltaX(0); }}
@@ -201,3 +203,5 @@ function RequireAuth({ children }){
   if(!t) return <Navigate to="/login" replace />;
   return children;
 }
+  const location = useLocation();
+  const isLoginRoute = location.pathname === '/login' || location.pathname === '/';

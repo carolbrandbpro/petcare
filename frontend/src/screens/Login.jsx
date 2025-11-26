@@ -41,6 +41,7 @@ export default function Login(){
   return (
     <div className="page-center">
       <div className="card form-wrap" style={{maxWidth:420}}>
+      <div style={{fontSize:22, fontWeight:700, color:'var(--color-primary)', marginBottom:6}}>PetCare — Demo</div>
       <div style={{fontSize:18, fontWeight:600, marginBottom:12}}>Entrar</div>
       <form onSubmit={submit}>
         <label style={{display:'block', marginBottom:8}}>
