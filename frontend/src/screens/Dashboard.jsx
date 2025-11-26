@@ -3,8 +3,8 @@ import React from 'react';
 export default function Dashboard(){
   const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')||'null') : null;
   return (
-    <div style={{display:'grid', gap:18}}>
-      <div style={{display:'flex', alignItems:'center', gap:12}}>
+    <div className="dashboard">
+      <div className="dashboard-header">
         <button className="mobile-only btn btn-outline" aria-label="Abrir menu" onClick={()=>document.querySelector('.side-menu')?.classList.add('expanded')}>
           <span className="nav-icon">≡</span>
         </button>
@@ -27,15 +27,15 @@ export default function Dashboard(){
 
       <section>
         <div style={{fontSize:18, fontWeight:700, color:'#FF7A00', marginBottom:8}}>O que você está procurando?</div>
-        <div style={{display:'grid', gridTemplateColumns:'repeat(2, minmax(0,1fr))', gap:12}}>
+        <div className="dashboard-grid-2">
           <div className="card" style={{display:'grid', gap:10}}>
-            <img src="https://placekitten.com/120/120" alt="Produtos" style={{width:72, height:72, borderRadius:'50%', objectFit:'cover', justifySelf:'center'}} />
+            <img src="https://picsum.photos/seed/petproducts/120" alt="Produtos" loading="lazy" style={{width:72, height:72, borderRadius:'50%', objectFit:'cover', justifySelf:'center'}} />
             <div style={{fontWeight:700, textAlign:'center'}}>Produtos</div>
             <div style={{fontSize:13, color:'#555', textAlign:'center'}}>Toda a linha de produtos pet sem sair de casa!</div>
             <button className="btn btn-outline" style={{justifySelf:'center'}}>Ver mais</button>
           </div>
           <div className="card" style={{display:'grid', gap:10}}>
-            <img src="https://place-puppy.com/120x120" alt="Serviços" style={{width:72, height:72, borderRadius:'50%', objectFit:'cover', justifySelf:'center'}} />
+            <img src="https://picsum.photos/seed/petservices/120" alt="Serviços" loading="lazy" style={{width:72, height:72, borderRadius:'50%', objectFit:'cover', justifySelf:'center'}} />
             <div style={{fontWeight:700, textAlign:'center'}}>Serviços</div>
             <div style={{fontSize:13, color:'#555', textAlign:'center'}}>Creches, hotéis e veterinários perto da sua casa!</div>
             <button className="btn btn-outline" style={{justifySelf:'center'}}>Ver mais</button>
@@ -45,7 +45,7 @@ export default function Dashboard(){
 
       <section>
         <div style={{fontSize:18, fontWeight:700, color:'#FF7A00', marginBottom:8}}>Fique informado</div>
-        <div style={{display:'flex', gap:12, overflowX:'auto', paddingBottom:4}}>
+        <div className="dashboard-tiles">
           {['Notícias','Blog','Aprenda'].map((t)=> (
             <div key={t} className="card tile" style={{minWidth:220, height:120, display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center'}}>{t}</div>
           ))}

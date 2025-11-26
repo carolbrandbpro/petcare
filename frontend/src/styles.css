@@ -88,3 +88,15 @@ body { font-family: Inter, system-ui, Arial; }
   .app-shell.login-shell .card { padding: 14px; }
   .app-shell.login-shell .page-center { padding: 12px; }
 }
+
+/* Dashboard mobile */
+.dashboard { display: grid; gap: 18px; }
+.dashboard-header { display:flex; align-items:center; gap:12px; }
+.dashboard-grid-2 { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px; }
+.dashboard-tiles { display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; }
+.dashboard-tiles .tile { min-width: 220px; height: 120px; display:flex; align-items:center; justify-content:center; text-align:center; }
+@media (max-width: 480px) {
+  .dashboard { gap: 14px; }
+  .dashboard-grid-2 { grid-template-columns: 1fr; }
+  .dashboard-tiles .tile { min-width: 160px; height: 100px; }
+}
