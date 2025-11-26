@@ -35,11 +35,6 @@ export default function App(){
     const v = localStorage.getItem('petId'); if(v) setPetId(v);
     const t = localStorage.getItem('token');
     const u = localStorage.getItem('user');
-    const envBase = import.meta.env.VITE_API_URL;
-    const host = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
-    let apiBase = envBase || `http://${host}:4001`;
-    if(host.startsWith('172.')) apiBase = 'http://localhost:4001';
-    axios.defaults.baseURL = apiBase;
     if(t) axios.defaults.headers.common['Authorization'] = `Bearer ${t}`;
     if(u) setUser(JSON.parse(u));
   },[]);

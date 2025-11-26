@@ -40,8 +40,9 @@ export default function Login(){
 
   return (
     <div className="page-center">
+      <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
+      <div style={{fontSize:22, fontWeight:700, color:'var(--color-primary)', marginBottom:10}}>PetCare — Demo</div>
       <div className="card form-wrap" style={{maxWidth:420}}>
-      <div style={{fontSize:22, fontWeight:700, color:'var(--color-primary)', marginBottom:6}}>PetCare — Demo</div>
       <div style={{fontSize:18, fontWeight:600, marginBottom:12}}>Entrar</div>
       <form onSubmit={submit}>
         <label style={{display:'block', marginBottom:8}}>
@@ -66,6 +67,7 @@ export default function Login(){
           border: msgType==='error' ? '1px solid #ff9a9a' : '1px solid #9ee7b4'}}>{msg}</div>
       )}
       <div style={{marginTop:12, fontSize:12, color:'#555'}}>Dica: use <span style={{fontWeight:600}}>admin@admin.com</span> com senha <span style={{fontWeight:600}}>admin</span> para testar.</div>
+      </div>
       </div>
     </div>
   );
