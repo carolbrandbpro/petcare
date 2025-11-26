@@ -41,7 +41,7 @@ body { font-family: Inter, system-ui, Arial; }
 .btn-danger { background: #ffe6e6; color: #a00; }
 .btn-outline { background: #fff; border-color: #ddd; color: #000; }
 .card { background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.08); padding:16px; }
-.page-center { display:flex; justify-content:center; align-items:center; padding:20px; min-height:70vh; }
+.page-center { display:flex; justify-content:center; align-items:center; padding:20px; min-height:100vh; }
 .form-wrap { width:100%; max-width:560px; }
 
 @media (max-width: 1024px) {
