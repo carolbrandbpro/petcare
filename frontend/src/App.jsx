@@ -31,6 +31,7 @@ export default function App(){
   const [isMobile, setIsMobile] = useState(false);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchDeltaX, setTouchDeltaX] = useState(0);
+  const isLoginRoute = (typeof window !== 'undefined') && (window.location.pathname === '/login' || window.location.pathname === '/');
   useEffect(()=>{ 
     const v = localStorage.getItem('petId'); if(v) setPetId(v);
     const t = localStorage.getItem('token');
@@ -62,7 +63,7 @@ export default function App(){
   function handlePetIdChange(e){ const v = e.target.value; setPetId(v); localStorage.setItem('petId', v); }
   function logout(){ localStorage.removeItem('token'); localStorage.removeItem('user'); delete axios.defaults.headers.common['Authorization']; setUser(null); }
   return (
-    <div className={`app-shell ${isSideMenuOpen ? 'menu-expanded' : 'menu-collapsed'}`} style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
+    <div className={`app-shell ${isLoginRoute ? 'login-shell' : (isSideMenuOpen ? 'menu-expanded' : 'menu-collapsed')}`} style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
       {!isLoginRoute && (
       <header className="app-header">
         <div style={{display:'flex', alignItems:'center', gap:8}}>
@@ -198,4 +199,3 @@ function RequireAuth({ children }){
   if(!t) return <Navigate to="/login" replace />;
   return children;
 }
-  const isLoginRoute = (typeof window !== 'undefined') && (window.location.pathname === '/login' || window.location.pathname === '/');
