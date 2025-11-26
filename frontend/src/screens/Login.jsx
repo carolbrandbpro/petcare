@@ -14,7 +14,7 @@ export default function Login(){
     e.preventDefault();
     setLoading(true);
     try{
-      const r = await api.post('/api/auth/login', { email, password });
+      const r = await api.post('/api/auth/login', { email: email.trim().toLowerCase(), password: password.trim() });
       const { token, user } = r.data;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
@@ -23,8 +23,16 @@ export default function Login(){
       setMsgType('success');
       setTimeout(()=>{ window.location.href = '/vaccines'; }, 700);
     }catch(err){
-      setMsg('Credenciais inválidas');
-      setMsgType('error');
+      const code = err?.response?.data?.error;
+      if(code==='too_many_attempts'){
+        const secs = err?.response?.data?.retryAfterSeconds || 60;
+        const mins = Math.ceil(secs/60);
+        setMsg(`Muitas tentativas. Aguarde ${mins} min e tente novamente.`);
+        setMsgType('error');
+      }else{
+        setMsg('Credenciais inválidas');
+        setMsgType('error');
+      }
     }finally{
       setLoading(false);
     }
