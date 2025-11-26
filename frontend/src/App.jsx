@@ -28,7 +28,6 @@ import RemindersList from './screens/RemindersList';
 import ConsultationAdd from './screens/ConsultationAdd';
 
 export default function App(){ 
-  const [petId, setPetId] = useState('');
   const [user, setUser] = useState(null);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -36,7 +35,6 @@ export default function App(){
   const [touchDeltaX, setTouchDeltaX] = useState(0);
   const isLoginRoute = (typeof window !== 'undefined') && ([ '/', '/login', '/register' ].includes(window.location.pathname));
   useEffect(()=>{ 
-    const v = localStorage.getItem('petId'); if(v) setPetId(v);
     const t = localStorage.getItem('token');
     const u = localStorage.getItem('user');
     if(t) axios.defaults.headers.common['Authorization'] = `Bearer ${t}`;
@@ -63,7 +61,6 @@ export default function App(){
       return ()=> window.removeEventListener('resize', onResize);
     }
   },[]);
-  function handlePetIdChange(e){ const v = e.target.value; setPetId(v); localStorage.setItem('petId', v); }
   function logout(){ localStorage.removeItem('token'); localStorage.removeItem('user'); delete axios.defaults.headers.common['Authorization']; setUser(null); }
   return (
     <div className={`app-shell ${isLoginRoute ? 'login-shell' : (isSideMenuOpen ? 'menu-expanded' : 'menu-collapsed')}`} style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
@@ -77,13 +74,6 @@ export default function App(){
           )}
           <Link to="/" style={{color:'#fff', textDecoration:'none'}}><h1 className="app-title">PetCare — Demo</h1></Link>
         </div>
-        {user && (
-          <div style={{display:'flex', alignItems:'center', gap:8, background:'#fff', color:'#000', padding:6, borderRadius:8, width:'100%', maxWidth:380}}>
-            <span style={{fontSize:12}}>Pet ID</span>
-            <input value={petId} onChange={handlePetIdChange} placeholder="UUID" style={{padding:6, width:220, border:'1px solid #ddd', borderRadius:6}} />
-            <a href="/pets/new" style={{background:'#FF7A00', color:'#fff', padding:'6px 10px', borderRadius:8, textDecoration:'none'}}>Criar Pet</a>
-          </div>
-        )}
       </header>
       )}
       {user && (
@@ -161,13 +151,6 @@ export default function App(){
         <div className="backdrop" onClick={()=>setIsSideMenuOpen(false)} />
       )}
       <main style={{marginTop:20}}>
-        {user && (
-          <div style={{display:'flex', alignItems:'center', gap:8, background:'#fff', color:'#000', padding:6, borderRadius:8, width:'100%', maxWidth:380}}>
-            <span style={{fontSize:12}}>Pet ID</span>
-            <input value={petId} onChange={handlePetIdChange} placeholder="UUID" style={{padding:6, width:220, border:'1px solid #ddd', borderRadius:6}} />
-            <a href="/pets/new" style={{background:'#FF7A00', color:'#fff', padding:'6px 10px', borderRadius:8, textDecoration:'none'}}>Criar Pet</a>
-          </div>
-        )}
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/vaccines" element={<RequireAuth><VaccinesList /></RequireAuth>} />
