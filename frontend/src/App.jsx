@@ -64,18 +64,7 @@ export default function App(){
   function logout(){ localStorage.removeItem('token'); localStorage.removeItem('user'); delete axios.defaults.headers.common['Authorization']; setUser(null); }
   return (
     <div className={`app-shell ${isLoginRoute ? 'login-shell' : (isSideMenuOpen ? 'menu-expanded' : 'menu-collapsed')}`} style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
-      {!isLoginRoute && (
-      <header className="app-header">
-        <div style={{display:'flex', alignItems:'center', gap:8}}>
-          {user && (
-            <button className="mobile-only btn btn-outline" aria-label="Abrir menu" onClick={()=>setIsSideMenuOpen(true)}>
-              <MenuIcon size={18} />
-            </button>
-          )}
-          <Link to="/" style={{color:'#fff', textDecoration:'none'}}><h1 className="app-title">PetCare — Demo</h1></Link>
-        </div>
-      </header>
-      )}
+      {/* header removido conforme pedido */}
       {user && (
         <aside className={`side-menu ${isSideMenuOpen ? 'expanded' : 'collapsed'}`}
           onTouchStart={(e)=>{ if(!isMobile || !isSideMenuOpen) return; setTouchStartX(e.touches[0].clientX); setTouchDeltaX(0); }}
