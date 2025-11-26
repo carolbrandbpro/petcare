@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link, NavLink, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { Pill, Syringe, ClipboardList, Bug, Bath, Bell, Link as LinkIcon, CalendarDays, TrendingUp, Sparkles, Power, Menu as MenuIcon, User } from 'lucide-react';
 import Profile from './screens/Profile';
@@ -198,5 +198,4 @@ function RequireAuth({ children }){
   if(!t) return <Navigate to="/login" replace />;
   return children;
 }
-  const location = useLocation();
-  const isLoginRoute = location.pathname === '/login' || location.pathname === '/';
+  const isLoginRoute = (typeof window !== 'undefined') && (window.location.pathname === '/login' || window.location.pathname === '/');
