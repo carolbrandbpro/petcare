@@ -7,7 +7,7 @@ function resolveBaseURL(){
   if(envBase) return envBase; // explicit URL (Render backend, etc.)
   const isDevVite = (!!port && /^51\d{2}$/.test(port)) || port === '4173' || port === '8080';
   if(isDevVite){
-    const baseHost = host.startsWith('172.') ? 'localhost' : host;
+    const baseHost = host; // usa o mesmo host acessado no frontend
     return `http://${baseHost}:4001`;
   }
   return '';
