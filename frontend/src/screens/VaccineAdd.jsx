@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../lib/api';
+import { showAlert } from '../lib/alert';
 
 export default function VaccineAdd(){
   const [vaccineId, setVaccineId] = useState('');
@@ -8,10 +9,10 @@ export default function VaccineAdd(){
   const petId = typeof window !== 'undefined' ? localStorage.getItem('petId') || '' : '';
 
   async function save(){
-    if(!petId){ alert('Informe o Pet ID no topo'); return; }
-    if(!vaccineId || !appliedDate){ alert('Preencha vacina e data'); return; }
+    if(!petId){ showAlert('Informe o Pet ID no topo','error'); return; }
+    if(!vaccineId || !appliedDate){ showAlert('Preencha vacina e data','error'); return; }
     await api.post(`/api/vaccines/${petId}`, { vaccine_catalog_id: vaccineId, applied_date: appliedDate, notes });
-    alert('Vacina salva'); window.location.href = '/vaccines';
+    showAlert('Vacina salva','success'); window.location.href = '/vaccines';
   }
 
   return (
@@ -32,7 +33,7 @@ export default function VaccineAdd(){
       </label>
       <div style={{display:'flex', gap:8, marginTop:8}}>
         <button onClick={save} className="btn btn-primary">Salvar</button>
-        <a href="/vaccines" className="btn btn-outline">Cancelar</a>
+        <a href="/dashboard" className="btn btn-outline">Cancelar</a>
       </div>
       </div>
     </div>

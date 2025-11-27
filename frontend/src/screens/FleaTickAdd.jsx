@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { showAlert } from '../lib/alert';
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
 
 export default function FleaTickAdd(){
@@ -10,10 +11,10 @@ export default function FleaTickAdd(){
   const petId = typeof window !== 'undefined' ? localStorage.getItem('petId') || '' : '';
 
   async function save(){
-    if(!petId){ alert('Informe o Pet ID no topo'); return; }
-    if(!product){ alert('Preencha o produto'); return; }
+    if(!petId){ showAlert('Informe o Pet ID no topo','error'); return; }
+    if(!product){ showAlert('Preencha o produto','error'); return; }
     await axios.post(`/api/fleas/${petId}`, { product, status, applied_date: appliedDate, notes });
-    alert('Registro salvo'); window.location.href = '/fleas';
+    showAlert('Registro salvo','success'); window.location.href = '/fleas';
   }
 
   return (
@@ -41,7 +42,7 @@ export default function FleaTickAdd(){
       </label>
       <div style={{display:'flex', gap:8, marginTop:8}}>
         <button onClick={save} className="btn btn-primary">Salvar</button>
-        <a href="/fleas" className="btn btn-outline">Cancelar</a>
+        <a href="/dashboard" className="btn btn-outline">Cancelar</a>
       </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { showAlert } from '../lib/alert';
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
 
 export default function BathAdd(){
@@ -9,9 +10,9 @@ export default function BathAdd(){
   const petId = typeof window !== 'undefined' ? localStorage.getItem('petId') || '' : '';
 
   async function save(){
-    if(!petId){ alert('Informe o Pet ID no topo'); return; }
+    if(!petId){ showAlert('Informe o Pet ID no topo','error'); return; }
     await axios.post(`/api/bath/${petId}`, { bath_date: bathDate, place, notes });
-    alert('Banho salvo'); window.location.href = '/bath';
+    showAlert('Banho salvo','success'); window.location.href = '/bath';
   }
 
   return (
@@ -32,7 +33,7 @@ export default function BathAdd(){
       </label>
       <div style={{display:'flex', gap:8, marginTop:8}}>
         <button onClick={save} className="btn btn-primary">Salvar</button>
-        <a href="/bath" className="btn btn-outline">Cancelar</a>
+        <a href="/dashboard" className="btn btn-outline">Cancelar</a>
       </div>
       </div>
     </div>

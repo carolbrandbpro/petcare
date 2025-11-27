@@ -133,6 +133,14 @@ body { font-family: Inter, system-ui, Arial; }
 
 .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.38); z-index: 900; }
 
+.alert-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.38); z-index: 2000; display:flex; align-items:center; justify-content:center; }
+.alert-box { min-width: 300px; max-width: 440px; background:#fff; border-radius:12px; box-shadow:0 12px 36px rgba(0,0,0,0.2); padding:16px; border:1px solid #eee; }
+.alert-box.success { border-color: #9ee7b4; }
+.alert-box.error { border-color: #ff9a9a; }
+.alert-box.info { border-color: #cde3ff; }
+.alert-message { font-size:14px; color:#0A0A0A; margin-bottom:12px; }
+.alert-actions { display:flex; justify-content:flex-end; }
+
 /* Login mobile layout */
 .app-shell.login-shell .form-wrap { max-width: 480px; }
 @media (max-width: 768px) {

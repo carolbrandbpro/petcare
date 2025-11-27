@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { showAlert } from '../lib/alert';
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
 
 export default function ExamAdd(){
@@ -9,10 +10,10 @@ export default function ExamAdd(){
   const petId = typeof window !== 'undefined' ? localStorage.getItem('petId') || '' : '';
 
   async function save(){
-    if(!petId){ alert('Informe o Pet ID no topo'); return; }
-    if(!title){ alert('Preencha o título'); return; }
+    if(!petId){ showAlert('Informe o Pet ID no topo','error'); return; }
+    if(!title){ showAlert('Preencha o título','error'); return; }
     await axios.post(`/api/exams/${petId}`, { title, exam_date: examDate, notes });
-    alert('Exame salvo'); window.location.href = '/exams';
+    showAlert('Exame salvo','success'); window.location.href = '/exams';
   }
 
   return (
@@ -33,7 +34,7 @@ export default function ExamAdd(){
       </label>
       <div style={{display:'flex', gap:8, marginTop:8}}>
         <button onClick={save} className="btn btn-primary">Salvar</button>
-        <a href="/exams" className="btn btn-outline">Cancelar</a>
+        <a href="/dashboard" className="btn btn-outline">Cancelar</a>
       </div>
       </div>
     </div>

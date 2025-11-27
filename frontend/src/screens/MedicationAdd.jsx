@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { showAlert } from '../lib/alert';
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
 
 export default function MedicationAdd(){
@@ -9,10 +10,10 @@ export default function MedicationAdd(){
   const petId = typeof window !== 'undefined' ? localStorage.getItem('petId') || '' : '';
 
   async function save(){
-    if(!petId){ alert('Informe o Pet ID no topo'); return; }
-    if(!medicationId || !startDate){ alert('Preencha medicamento e data inicial'); return; }
+    if(!petId){ showAlert('Informe o Pet ID no topo','error'); return; }
+    if(!medicationId || !startDate){ showAlert('Preencha medicamento e data inicial','error'); return; }
     await axios.post(`/api/medications/${petId}`, { medication_catalog_id: medicationId, start_date: startDate, notes });
-    alert('Medicamento salvo'); window.location.href = '/medications';
+    showAlert('Medicamento salvo','success'); window.location.href = '/medications';
   }
 
   return (
@@ -33,7 +34,7 @@ export default function MedicationAdd(){
       </label>
       <div style={{display:'flex', gap:8, marginTop:8}}>
         <button onClick={save} className="btn btn-primary">Salvar</button>
-        <a href="/medications" className="btn btn-outline">Cancelar</a>
+        <a href="/dashboard" className="btn btn-outline">Cancelar</a>
       </div>
       </div>
     </div>

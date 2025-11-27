@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api, { resolveUrl } from '../lib/api';
+import { showAlert } from '../lib/alert';
 
 export default function ExamsList(){
   const [items, setItems] = useState([]);
@@ -26,7 +27,7 @@ export default function ExamsList(){
     <div style={{display:'grid', gap:12}}>
       <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
         <div style={{fontSize:18, fontWeight:600}}>Exames</div>
-        <a href="/exams/new" style={{background:'#FF7A00', color:'#fff', padding:'8px 12px', borderRadius:8}}>Adicionar</a>
+        <a href="/exams/new" className="btn btn-primary">Adicionar</a>
       </div>
       {!petId && <div style={{color:'#c00'}}>Informe o Pet ID no topo.</div>}
       {loading && <div>Carregando...</div>}
@@ -62,14 +63,14 @@ export default function ExamsList(){
             <div style={{fontSize:12}}>Adicionar arquivo</div>
             <input type="file" onChange={e=>{
               const f = e.target.files?.[0]||null; 
-              if(f && f.size > 8*1024*1024){ alert('Arquivo maior que 8MB'); e.target.value=''; return; }
-              if(f && !['image/jpeg','image/png','application/pdf'].includes(f.type)){ alert('Tipo de arquivo não suportado'); e.target.value=''; return; }
+              if(f && f.size > 8*1024*1024){ showAlert('Arquivo maior que 8MB','error'); e.target.value=''; return; }
+              if(f && !['image/jpeg','image/png','application/pdf'].includes(f.type)){ showAlert('Tipo de arquivo não suportado','error'); e.target.value=''; return; }
               setUploadFile(f);
             }} />
             <input value={uploadName} onChange={e=>setUploadName(e.target.value)} placeholder="Nome do arquivo" style={{padding:6, border:'1px solid #ddd', borderRadius:8}} />
             <div style={{display:'flex', gap:8}}>
               <button onClick={async()=>{
-                if(!uploadFile || !uploadName){ alert('Selecione o arquivo e informe o nome'); return; }
+                if(!uploadFile || !uploadName){ showAlert('Selecione o arquivo e informe o nome','error'); return; }
                 const fr = new FileReader();
                 fr.onload = async ()=>{
                   const content = fr.result;

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { showAlert } from '../lib/alert';
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
 
 export default function VaccineForm({petId, onSaved}) {
@@ -9,14 +10,14 @@ export default function VaccineForm({petId, onSaved}) {
 
   async function handleSubmit(e){
     e.preventDefault();
-    if(!petId){ alert('Informe o Pet ID'); return; }
+    if(!petId){ showAlert('Informe o Pet ID','error'); return; }
     try{
       await axios.post(`/api/vaccines/${petId}`, { vaccine_catalog_id: vaccineId, applied_date: appliedDate, notes });
       setVaccineId(''); setAppliedDate(''); setNotes('');
       if(onSaved) onSaved();
-      alert('Vacina registrada');
+      showAlert('Vacina registrada','success');
     }catch(err){
-      alert('Erro ao salvar (backend não rodando?)');
+      showAlert('Erro ao salvar (backend não rodando?)','error');
     }
   }
 
@@ -34,7 +35,7 @@ export default function VaccineForm({petId, onSaved}) {
         Notas
         <textarea value={notes} onChange={e=>setNotes(e.target.value)} style={{width:'100%', padding:8, marginTop:6}} />
       </label>
-      <button style={{background:'#ff7800', color:'#fff', padding:'8px 12px', borderRadius:6}}>Salvar</button>
+      <button className="btn btn-primary">Salvar</button>
     </form>
   );
 }

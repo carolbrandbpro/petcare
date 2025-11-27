@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import api, { resolveUrl } from './lib/api';
+import { showAlert } from './lib/alert';
 import { Pill, Syringe, ClipboardList, Bug, Bath, Bell, Link as LinkIcon, CalendarDays, TrendingUp, Sparkles, Power, Menu as MenuIcon, User, Home as HomeIcon } from 'lucide-react';
 import Profile from './screens/Profile';
 import VaccinesList from './screens/VaccinesList';
@@ -34,6 +35,7 @@ export default function App(){
   const [isMobile, setIsMobile] = useState(false);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchDeltaX, setTouchDeltaX] = useState(0);
+  const [alertBox, setAlertBox] = useState({ open:false, message:'', type:'info' });
   const isLoginRoute = (typeof window !== 'undefined') && ([ '/login', '/register' ].includes(window.location.pathname));
   useEffect(()=>{ 
     const t = localStorage.getItem('token');
@@ -63,6 +65,8 @@ export default function App(){
       const onClose = ()=> setIsSideMenuOpen(false);
       window.addEventListener('open-menu', onOpen);
       window.addEventListener('close-menu', onClose);
+      const onAlert = (e)=>{ const {message,type} = e.detail||{}; setAlertBox({ open:true, message: String(message||''), type: type||'info' }); };
+      window.addEventListener('app-alert', onAlert);
       return ()=> { window.removeEventListener('resize', onResize); window.removeEventListener('open-menu', onOpen); window.removeEventListener('close-menu', onClose); };
     }
   },[]);
@@ -176,6 +180,16 @@ export default function App(){
           <Route path="*" element={<Welcome />} />
         </Routes>
       </main>
+      {alertBox.open && (
+        <div className="alert-overlay" onClick={()=>setAlertBox({ ...alertBox, open:false })}>
+          <div className={`alert-box ${alertBox.type}`} onClick={(e)=>e.stopPropagation()}>
+            <div className="alert-message">{alertBox.message}</div>
+            <div className="alert-actions">
+              <button className="btn btn-primary" onClick={()=>setAlertBox({ ...alertBox, open:false })}>OK</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

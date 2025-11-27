@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../lib/api';
+import { showAlert } from '../lib/alert';
 
 export default function ConsultationAdd(){
   const [title, setTitle] = useState('Consulta');
@@ -9,10 +10,10 @@ export default function ConsultationAdd(){
   const petId = typeof window !== 'undefined' ? localStorage.getItem('petId') || '' : '';
 
   async function save(){
-    if(!petId){ alert('Informe o Pet ID no topo'); return; }
-    if(!title || !startAt){ alert('Preencha título e data/hora'); return; }
+    if(!petId){ showAlert('Informe o Pet ID no topo','error'); return; }
+    if(!title || !startAt){ showAlert('Preencha título e data/hora','error'); return; }
     await api.post(`/api/appointments/${petId}`, { title, description, start_at: startAt, location });
-    alert('Consulta salva'); window.location.href = '/consultations';
+    showAlert('Consulta salva','success'); window.location.href = '/consultations';
   }
 
   return (
@@ -37,7 +38,7 @@ export default function ConsultationAdd(){
       </label>
       <div style={{display:'flex', gap:8, marginTop:8}}>
         <button onClick={save} className="btn btn-primary">Salvar</button>
-        <a href="/consultations" className="btn btn-outline">Cancelar</a>
+        <a href="/dashboard" className="btn btn-outline">Cancelar</a>
       </div>
       </div>
     </div>
