@@ -7,6 +7,7 @@ export default function PetAdd(){
   const [species, setSpecies] = useState('');
   const [breed, setBreed] = useState('');
   const [birth, setBirth] = useState('');
+  const [photo, setPhoto] = useState(null);
 
   async function save(){
     try{
@@ -14,6 +15,11 @@ export default function PetAdd(){
       const r = await api.post('/api/pets', { name, species, breed, birth_date: birth });
       const pet = r.data;
       localStorage.setItem('petId', pet.id);
+      if(photo){
+        const fr = new FileReader();
+        fr.onload = async ()=>{ const dataUrl = fr.result; await api.post(`/api/pets/${pet.id}/avatar`, { dataUrl }); };
+        fr.readAsDataURL(photo);
+      }
       showAlert('Pet criado', 'success');
       window.location.href = '/vaccines';
     }catch(err){
@@ -25,6 +31,10 @@ export default function PetAdd(){
     <div className="page-center">
       <div className="card form-wrap">
         <div style={{fontSize:18, fontWeight:600, marginBottom:12}}>Cadastrar Pet</div>
+        <label style={{display:'block', marginBottom:8}}>
+          <span style={{display:'block', fontSize:12, marginBottom:4}}>Foto (opcional)</span>
+          <input type="file" accept="image/*" onChange={e=>setPhoto(e.target.files?.[0]||null)} />
+        </label>
         <label style={{display:'block', marginBottom:8}}>
           <span style={{display:'block', fontSize:12, marginBottom:4}}>Nome</span>
           <input value={name} onChange={e=>setName(e.target.value)} style={{width:'100%', padding:8, border:'1px solid #ddd', borderRadius:8}} />

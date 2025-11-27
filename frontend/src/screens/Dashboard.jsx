@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import api, { resolveUrl } from '../lib/api';
 import { CalendarDays, Pencil, Share2 } from 'lucide-react';
 
 export default function Dashboard(){
   const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')||'null') : null;
   const [showAddPetSheet, setShowAddPetSheet] = useState(false);
+  const [pets, setPets] = useState([]);
+  useEffect(()=>{
+    async function load(){ try{ const r = await api.get('/api/pets'); setPets(r.data||[]); }catch{} }
+    load();
+  },[]);
   return (
     <div className="dashboard">
       <div className="dashboard-header">
@@ -15,8 +21,24 @@ export default function Dashboard(){
 
       <section className="card" style={{display:'grid', gap:10}}>
         <div style={{fontSize:18, fontWeight:700, color:'var(--color-primary)'}}>Meus Pets</div>
-        <div style={{fontSize:15, color:'#222'}}>Você ainda não registrou seu pet</div>
-        <button onClick={()=>setShowAddPetSheet(true)} className="btn btn-secondary" style={{width:240, textAlign:'center'}}>ADICIONAR NOVO PET  +</button>
+        {pets.length === 0 && (
+          <>
+            <div style={{fontSize:15, color:'#222'}}>Você ainda não registrou seu pet</div>
+            <button onClick={()=>setShowAddPetSheet(true)} className="btn btn-secondary" style={{width:240, textAlign:'center'}}>ADICIONAR NOVO PET  +</button>
+          </>
+        )}
+        {pets.length > 0 && (
+          <div style={{display:'flex', gap:12, flexWrap:'wrap'}}>
+            {pets.map(p=> (
+              <div key={p.id} style={{display:'grid', placeItems:'center', gap:6}}>
+                <img src={p.avatar_url ? resolveUrl(p.avatar_url) : `https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||'Pet')}&background=FFDE59&color=000&size=72&rounded=true`}
+                  alt={p.name} style={{width:72, height:72, borderRadius:'50%', objectFit:'cover', border:'3px solid var(--color-secondary)'}} />
+                <div style={{fontSize:12, fontWeight:600}}>{p.name}</div>
+              </div>
+            ))}
+            <button onClick={()=>setShowAddPetSheet(true)} className="btn btn-secondary" style={{height:72}}>Adicionar</button>
+          </div>
+        )}
       </section>
 
       <section style={{background:'#f3f3f3', padding:14, borderRadius:12}}>
