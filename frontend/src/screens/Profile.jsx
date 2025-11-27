@@ -84,8 +84,13 @@ export default function Profile(){
 
   return (
     <div className="page-center">
-      <div className="card" style={{width:'100%', maxWidth:560}}>
-        <div style={{fontSize:18, fontWeight:600, marginBottom:12}}>Meu Perfil</div>
+      <div style={{width:'100%', maxWidth:560}}>
+        <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:12}}>
+          <div style={{fontSize:16, color:'#555'}}>Dashboard</div>
+          <button className="btn btn-secondary" onClick={()=>{ window.location.href='/dashboard'; }}>Ir para o Dashboard</button>
+        </div>
+        <div className="card">
+          <div style={{fontSize:18, fontWeight:600, marginBottom:12}}>Meu Perfil</div>
         <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:16}}>
           <img src={avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(name||'Usuario')}&background=FF7A00&color=fff&size=64&rounded=true`} alt="Avatar" style={{width:64, height:64, borderRadius:'50%', objectFit:'cover', background:'#eee'}} />
           <div style={{display:'flex', gap:8}}>
@@ -124,6 +129,7 @@ export default function Profile(){
             color: msgType==='error' ? '#a00000' : '#106b2e',
             border: msgType==='error' ? '1px solid #ff9a9a' : '1px solid #9ee7b4'}}>{msg}</div>
         )}
+        </div>
       </div>
     </div>
   );

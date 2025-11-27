@@ -14,6 +14,7 @@ data class LoginRequest(val email: String, val password: String)
 data class LoginResponse(val token: String, val user: UserDto)
 data class UserDto(val id: String, val email: String, val name: String?)
 data class UserProfile(val id: String, val email: String, val name: String?, val avatar_url: String?)
+data class GoogleLoginRequest(val id_token: String?)
 
 class AuthInterceptor(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -38,6 +39,9 @@ fun retrofit(context: Context): Retrofit {
 interface AuthService {
     @POST("/api/auth/login")
     suspend fun login(@Body body: LoginRequest): LoginResponse
+
+    @POST("/api/auth/google")
+    suspend fun google(@Body body: GoogleLoginRequest): LoginResponse
 }
 
 interface UsersService {

@@ -51,5 +51,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
 }

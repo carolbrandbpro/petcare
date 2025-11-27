@@ -81,11 +81,20 @@ router.post('/login', async (req,res)=>{
 
 router.post('/google', async (req,res)=>{
   try{
-    const { access_token } = req.body;
-    if(!access_token) return res.status(400).json({ error: 'missing_access_token' });
-    const resp = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', { headers: { Authorization: `Bearer ${access_token}` } });
-    if(!resp.ok) return res.status(401).json({ error: 'invalid_google_token' });
-    const data = await resp.json();
+    const { access_token, id_token } = req.body;
+    let data;
+    if(access_token){
+      const resp = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', { headers: { Authorization: `Bearer ${access_token}` } });
+      if(!resp.ok) return res.status(401).json({ error: 'invalid_google_token' });
+      data = await resp.json();
+    } else if(id_token){
+      const resp = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(id_token)}`);
+      if(!resp.ok) return res.status(401).json({ error: 'invalid_google_token' });
+      const t = await resp.json();
+      data = { email: t.email, name: t.name, picture: t.picture };
+    } else {
+      return res.status(400).json({ error: 'missing_token' });
+    }
     const email = (data.email || '').toLowerCase();
     if(!email) return res.status(400).json({ error: 'missing_email' });
     let user;
