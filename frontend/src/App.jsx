@@ -78,21 +78,21 @@ export default function App(){
           <nav>
             {isSideMenuOpen && user && (
               <div className="side-header">
-                <img src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name||'Usuario')}&background=03989F&color=fff&size=64&rounded=true`} alt="Avatar" className="avatar" />
+                <img src={(user.avatar_url && user.avatar_url.startsWith('/')) ? ((axios.defaults.baseURL||'') + user.avatar_url) : (user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name||'Usuario')}&background=03989F&color=fff&size=64&rounded=true`)} alt="Avatar" className="avatar" />
                 <div className="side-user-meta">
                   <div className="side-user-name">{user.name || 'Usuário'}</div>
                   <div className="side-user-email">{user.email}</div>
                 </div>
               </div>
             )}
+            <NavLink to="/dashboard" className={({isActive})=>`side-item${isActive?' active':''} dashboard`} onClick={()=>{ if(typeof window!== 'undefined' && window.innerWidth < 1024) setIsSideMenuOpen(false); }} style={{background:'var(--color-secondary)', color:'#000'}}>
+              <span className="side-icon"><CalendarDays size={18} /></span>
+              {isSideMenuOpen && <span className="side-label">Dashboard</span>}
+            </NavLink>
             <button className="side-item" onClick={()=>setIsSideMenuOpen(v=>!v)}>
               <span className="side-icon"><MenuIcon size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Menu</span>}
             </button>
-            <NavLink to="/dashboard" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>{ if(typeof window!== 'undefined' && window.innerWidth < 1024) setIsSideMenuOpen(false); }}>
-              <span className="side-icon"><CalendarDays size={18} /></span>
-              {isSideMenuOpen && <span className="side-label">Dashboard</span>}
-            </NavLink>
             <NavLink to="/profile" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>{ if(typeof window!== 'undefined' && window.innerWidth < 1024) setIsSideMenuOpen(false); }}>
               <span className="side-icon"><User size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Meu Perfil</span>}
