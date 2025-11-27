@@ -28,7 +28,7 @@ body { font-family: Inter, system-ui, Arial; }
 .side-user-meta { display:flex; flex-direction:column; line-height:1.2; }
 .side-user-name { font-size:15px; font-weight:700; }
 .side-user-email { font-size:12px; opacity:0.95; }
-.side-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin: 4px 8px; border-radius: 8px; color: #fff; text-decoration: none; border: none; background: transparent; width: calc(100% - 16px); cursor: pointer; position: relative; }
+.side-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin: 4px 8px; border-radius: 8px; color: #fff; text-decoration: none; border: none; background: transparent; width: calc(100% - 16px); cursor: pointer; position: relative; flex-wrap: nowrap; }
 .side-item:hover { background: rgba(255,255,255,0.12); color: var(--color-secondary); }
 .side-item.active { background: #fff; color: var(--color-primary); }
 .side-item.active::before { content: ""; position: absolute; left: 4px; top: 6px; bottom: 6px; width: 3px; background: var(--color-secondary); border-radius: 2px; }

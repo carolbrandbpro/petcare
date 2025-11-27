@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../lib/api';
+import api, { resolveUrl } from '../lib/api';
 
 export default function Profile(){
   const [profile, setProfile] = useState(null);
@@ -93,7 +93,7 @@ export default function Profile(){
         <div className="card">
           <div style={{fontSize:18, fontWeight:600, marginBottom:12}}>Meu Perfil</div>
         <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:16}}>
-          <img src={(avatarUrl && avatarUrl.startsWith('/')) ? `${api.defaults.baseURL||''}${avatarUrl}` : (avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(name||'Usuario')}&background=03989F&color=fff&size=64&rounded=true`)} alt="Avatar" style={{width:64, height:64, borderRadius:'50%', objectFit:'cover', background:'#eee'}} />
+          <img src={avatarUrl ? resolveUrl(avatarUrl) : `https://ui-avatars.com/api/?name=${encodeURIComponent(name||'Usuario')}&background=03989F&color=fff&size=64&rounded=true`} alt="Avatar" style={{width:64, height:64, borderRadius:'50%', objectFit:'cover', background:'#eee'}} />
           <div style={{display:'flex', gap:8}}>
             <label className="btn btn-outline" style={{cursor:'pointer'}}>
               Carregar foto

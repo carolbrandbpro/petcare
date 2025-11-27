@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../lib/api';
+import api, { resolveUrl } from '../lib/api';
 
 export default function ExamsList(){
   const [items, setItems] = useState([]);
@@ -40,8 +40,7 @@ export default function ExamsList(){
               <div style={{fontSize:12, color:'#555'}}>Anexos</div>
               <div style={{display:'flex', gap:12, flexWrap:'wrap'}}>
                 {i.files.map(f=> {
-                  const abs = (u)=> (u && u.startsWith('/')) ? `${api.defaults.baseURL||''}${u}` : u;
-                  const href = abs(f.url);
+                  const href = resolveUrl(f.url);
                   return (
                   <div key={f.name} style={{display:'grid', gap:6, alignContent:'start'}}>
                     {String(f.mime||'').startsWith('image/') ? (

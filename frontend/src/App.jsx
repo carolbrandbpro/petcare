@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import api, { resolveUrl } from './lib/api';
 import { Pill, Syringe, ClipboardList, Bug, Bath, Bell, Link as LinkIcon, CalendarDays, TrendingUp, Sparkles, Power, Menu as MenuIcon, User, Home as HomeIcon } from 'lucide-react';
 import Profile from './screens/Profile';
 import VaccinesList from './screens/VaccinesList';
@@ -78,7 +79,7 @@ export default function App(){
           <nav>
             {isSideMenuOpen && user && (
               <div className="side-header">
-                <img src={(user.avatar_url && user.avatar_url.startsWith('/')) ? ((axios.defaults.baseURL||'') + user.avatar_url) : (user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name||'Usuario')}&background=03989F&color=fff&size=64&rounded=true`)} alt="Avatar" className="avatar" />
+                <img src={user.avatar_url ? resolveUrl(user.avatar_url) : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name||'Usuario')}&background=03989F&color=fff&size=64&rounded=true`} alt="Avatar" className="avatar" />
                 <div className="side-user-meta">
                   <div className="side-user-name">{user.name || 'Usuário'}</div>
                   <div className="side-user-email">{user.email}</div>

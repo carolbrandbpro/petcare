@@ -15,7 +15,17 @@ function resolveBaseURL(){
 
 const api = axios.create({ baseURL: resolveBaseURL() });
 
-const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-if(token) api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+api.interceptors.request.use((config)=>{
+  if(typeof window !== 'undefined'){
+    const t = localStorage.getItem('token');
+    if(t) config.headers = { ...(config.headers||{}), Authorization: `Bearer ${t}` };
+  }
+  return config;
+});
 
 export default api;
+export function resolveUrl(u){
+  if(!u) return u;
+  if(typeof u === 'string' && u.startsWith('/')) return `${api.defaults.baseURL||''}${u}`;
+  return u;
+}
