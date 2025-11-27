@@ -45,7 +45,8 @@ fun PetCareApp() {
                 composable("dashboard") { DashboardScreen(onLogout = {
                     ctx.getSharedPreferences("petcare", Context.MODE_PRIVATE).edit().remove("token").apply()
                     nav.navigate("login") { popUpTo("dashboard") { inclusive = true } }
-                }, onAddPet = { nav.navigate("addPet") }, onShare = { nav.navigate("share") }) }
+                }, onAddPet = { nav.navigate("addPet") }, onShare = { nav.navigate("share") }, onProfile = { nav.navigate("profile") }) }
+                composable("profile") { ProfileScreen(onClose = { nav.navigate("dashboard") { popUpTo("profile") { inclusive = true } } }) }
                 composable("addPet") { AddPetScreen(onCancel = { nav.navigate("dashboard") { popUpTo("dashboard") { inclusive = true } } }, onSaved = { petId ->
                     ctx.getSharedPreferences("petcare", Context.MODE_PRIVATE).edit().putString("petId", petId).apply()
                     nav.navigate("dashboard") { popUpTo("addPet") { inclusive = true } }

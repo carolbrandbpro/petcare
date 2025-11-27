@@ -58,7 +58,11 @@ export default function App(){
       const m = window.innerWidth < 1024; setIsMobile(m);
       const onResize = ()=> setIsMobile(window.innerWidth < 1024);
       window.addEventListener('resize', onResize);
-      return ()=> window.removeEventListener('resize', onResize);
+      const onOpen = ()=> setIsSideMenuOpen(true);
+      const onClose = ()=> setIsSideMenuOpen(false);
+      window.addEventListener('open-menu', onOpen);
+      window.addEventListener('close-menu', onClose);
+      return ()=> { window.removeEventListener('resize', onResize); window.removeEventListener('open-menu', onOpen); window.removeEventListener('close-menu', onClose); };
     }
   },[]);
   function logout(){ localStorage.removeItem('token'); localStorage.removeItem('user'); delete axios.defaults.headers.common['Authorization']; setUser(null); }
@@ -74,7 +78,7 @@ export default function App(){
           <nav>
             {isSideMenuOpen && user && (
               <div className="side-header">
-                <img src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name||'Usuario')}&background=FF7A00&color=fff&size=64&rounded=true`} alt="Avatar" className="avatar" />
+                <img src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name||'Usuario')}&background=03989F&color=fff&size=64&rounded=true`} alt="Avatar" className="avatar" />
                 <div className="side-user-meta">
                   <div className="side-user-name">{user.name || 'Usuário'}</div>
                   <div className="side-user-email">{user.email}</div>
@@ -85,6 +89,10 @@ export default function App(){
               <span className="side-icon"><MenuIcon size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Menu</span>}
             </button>
+            <NavLink to="/dashboard" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>{ if(typeof window!== 'undefined' && window.innerWidth < 1024) setIsSideMenuOpen(false); }}>
+              <span className="side-icon"><CalendarDays size={18} /></span>
+              {isSideMenuOpen && <span className="side-label">Dashboard</span>}
+            </NavLink>
             <NavLink to="/profile" className={({isActive})=>`side-item${isActive?' active':''}`} onClick={()=>{ if(typeof window!== 'undefined' && window.innerWidth < 1024) setIsSideMenuOpen(false); }}>
               <span className="side-icon"><User size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Meu Perfil</span>}

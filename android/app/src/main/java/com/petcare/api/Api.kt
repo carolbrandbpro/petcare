@@ -15,6 +15,7 @@ data class LoginResponse(val token: String, val user: UserDto)
 data class UserDto(val id: String, val email: String, val name: String?)
 data class UserProfile(val id: String, val email: String, val name: String?, val avatar_url: String?)
 data class GoogleLoginRequest(val id_token: String?)
+data class UpdateUser(val name: String?, val avatar_url: String?)
 
 class AuthInterceptor(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -47,4 +48,7 @@ interface AuthService {
 interface UsersService {
     @retrofit2.http.GET("/api/users/me")
     suspend fun me(): UserProfile
+
+    @retrofit2.http.PUT("/api/users/me")
+    suspend fun update(@Body body: UpdateUser): UserProfile
 }

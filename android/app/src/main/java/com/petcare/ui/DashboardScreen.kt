@@ -46,7 +46,7 @@ import androidx.compose.material3.ButtonDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen(onLogout: () -> Unit, onAddPet: () -> Unit, onShare: () -> Unit) {
+fun DashboardScreen(onLogout: () -> Unit, onAddPet: () -> Unit, onShare: () -> Unit, onProfile: () -> Unit) {
     val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var showSheet by remember { mutableStateOf(false) }
     val ctx = LocalContext.current
@@ -88,7 +88,7 @@ fun DashboardScreen(onLogout: () -> Unit, onAddPet: () -> Unit, onShare: () -> U
                         if (userEmail.isNotBlank()) Text(userEmail)
                     }
                 }
-                NavigationDrawerItem(label = { Text("Meu Perfil") }, selected = false, onClick = {})
+                NavigationDrawerItem(label = { Text("Meu Perfil") }, selected = false, onClick = onProfile)
                 NavigationDrawerItem(label = { Text("Medicamentos") }, selected = false, onClick = {})
                 NavigationDrawerItem(label = { Text("Vacinas") }, selected = false, onClick = {})
                 NavigationDrawerItem(label = { Text("Exames") }, selected = false, onClick = {})
