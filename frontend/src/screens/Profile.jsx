@@ -24,12 +24,17 @@ export default function Profile(){
   async function save(){
     setLoading(true);
     try{
-      const r = await api.put('/api/users/me', { name, avatar_url: avatarUrl });
+      const payload = { name: name?.trim() || profile?.name || '', avatar_url: avatarUrl || null };
+      const r = await api.put('/api/users/me', payload);
       setProfile(r.data);
       localStorage.setItem('user', JSON.stringify(r.data));
       window.dispatchEvent(new Event('user-updated'));
       setMsg('Perfil atualizado'); setMsgType('success');
-    }catch{ setMsg('Falha ao salvar perfil'); setMsgType('error'); }
+    }catch(err){
+      const code = err?.response?.data?.error;
+      setMsg(code==='unauthorized' ? 'Sessão expirada. Faça login novamente.' : 'Falha ao salvar perfil');
+      setMsgType('error');
+    }
     finally{ setLoading(false); }
   }
 
@@ -53,7 +58,7 @@ export default function Profile(){
       const dataUrl = reader.result;
       const r = await api.post('/api/users/avatar', { dataUrl });
       setAvatarUrl(r.data.avatar_url);
-      await save();
+      await load();
     };
     reader.readAsDataURL(f);
   }
