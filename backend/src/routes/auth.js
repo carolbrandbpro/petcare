@@ -79,4 +79,33 @@ router.post('/login', async (req,res)=>{
   }
 });
 
+router.post('/google', async (req,res)=>{
+  try{
+    const { access_token } = req.body;
+    if(!access_token) return res.status(400).json({ error: 'missing_access_token' });
+    const resp = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', { headers: { Authorization: `Bearer ${access_token}` } });
+    if(!resp.ok) return res.status(401).json({ error: 'invalid_google_token' });
+    const data = await resp.json();
+    const email = (data.email || '').toLowerCase();
+    if(!email) return res.status(400).json({ error: 'missing_email' });
+    let user;
+    const r = await pool.query('SELECT * FROM users WHERE email=$1', [email]);
+    user = r.rows[0];
+    if(!user){
+      const random = Math.random().toString(36).slice(2);
+      const hash = await bcrypt.hash(random, 10);
+      const ins = await pool.query('INSERT INTO users (email, password_hash, name, avatar_url) VALUES ($1,$2,$3,$4) RETURNING *', [email, hash, data.name || null, data.picture || null]);
+      user = ins.rows[0];
+    } else {
+      await pool.query('UPDATE users SET name=COALESCE($2,name), avatar_url=COALESCE($3,avatar_url) WHERE id=$1', [user.id, data.name || null, data.picture || null]);
+      const r2 = await pool.query('SELECT * FROM users WHERE id=$1', [user.id]);
+      user = r2.rows[0];
+    }
+    const token = jwt.sign({id:user.id}, process.env.JWT_SECRET || 'devsecret', { expiresIn: JWT_TTL });
+    return res.json({ token, user: { id: user.id, email: user.email, name: user.name, avatar_url: user.avatar_url } });
+  }catch(err){
+    return res.status(500).json({ error: 'auth_unavailable' });
+  }
+});
+
 export default router;

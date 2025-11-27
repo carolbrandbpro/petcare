@@ -38,6 +38,33 @@ export default function Login(){
     }
   }
 
+  async function loginWithGoogle(){
+    try{
+      const cid = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+      if(!cid){ setMsg('Configure VITE_GOOGLE_CLIENT_ID'); setMsgType('error'); return; }
+      const w = window;
+      if(!w.google){
+        const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.onload = loginWithGoogle; document.head.appendChild(s); return;
+      }
+      const client = w.google.accounts.oauth2.initTokenClient({
+        client_id: cid,
+        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+        callback: async (resp)=>{
+          try{
+            const r = await api.post('/api/auth/google', { access_token: resp.access_token });
+            const { token, user } = r.data;
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setMsg('Login com Google realizado'); setMsgType('success');
+            setTimeout(()=>{ window.location.href = '/dashboard'; }, 500);
+          }catch{ setMsg('Falha no login com Google'); setMsgType('error'); }
+        }
+      });
+      client.requestAccessToken();
+    }catch{ setMsg('Falha ao iniciar Google'); setMsgType('error'); }
+  }
+
   return (
     <div className="page-center">
       <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
@@ -59,6 +86,9 @@ export default function Login(){
           </div>
         </label>
       <button disabled={loading} className="btn btn-primary" style={{width:'100%'}}>{loading?'Entrando...':'Entrar'}</button>
+      <div style={{marginTop:10, display:'grid', gap:8}}>
+        <button type="button" className="btn btn-outline" onClick={loginWithGoogle} style={{width:'100%'}}>Entrar com Google</button>
+      </div>
       </form>
       {msg && (
         <div style={{marginTop:12, padding:'10px 12px', borderRadius:8, fontSize:13,
