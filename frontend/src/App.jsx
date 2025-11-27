@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import { Pill, Syringe, ClipboardList, Bug, Bath, Bell, Link as LinkIcon, CalendarDays, TrendingUp, Sparkles, Power, Menu as MenuIcon, User } from 'lucide-react';
+import { Pill, Syringe, ClipboardList, Bug, Bath, Bell, Link as LinkIcon, CalendarDays, TrendingUp, Sparkles, Power, Menu as MenuIcon, User, Home } from 'lucide-react';
 import Profile from './screens/Profile';
 import VaccinesList from './screens/VaccinesList';
 import VaccineAdd from './screens/VaccineAdd';
@@ -86,7 +86,7 @@ export default function App(){
               </div>
             )}
             <NavLink to="/dashboard" className={({isActive})=>`side-item${isActive?' active':''} dashboard`} onClick={()=>{ if(typeof window!== 'undefined' && window.innerWidth < 1024) setIsSideMenuOpen(false); }} style={{background:'var(--color-secondary)', color:'#000'}}>
-              <span className="side-icon"><CalendarDays size={18} /></span>
+              <span className="side-icon"><Home size={18} /></span>
               {isSideMenuOpen && <span className="side-label">Dashboard</span>}
             </NavLink>
             <button className="side-item" onClick={()=>setIsSideMenuOpen(v=>!v)}>
