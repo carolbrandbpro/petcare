@@ -71,14 +71,14 @@ fun DashboardScreen(onLogout: () -> Unit, onAddPet: () -> Unit, onShare: () -> U
                             modifier = Modifier.size(40.dp).clip(CircleShape),
                             contentScale = ContentScale.Crop,
                             loading = {
-                                Text(text = (userName.split(" ").firstOrNull() ?: "U").take(2).uppercase(), modifier = Modifier.size(40.dp).clip(CircleShape).background(androidx.compose.ui.graphics.Color(0xFFFF7A00)).padding(8.dp))
+                                Text(text = (userName.split(" ").firstOrNull() ?: "U").take(2).uppercase(), modifier = Modifier.size(40.dp).clip(CircleShape).background(androidx.compose.ui.graphics.Color(0xFF03989F)).padding(8.dp))
                             },
                             error = {
-                                Text(text = (userName.split(" ").firstOrNull() ?: "U").take(2).uppercase(), modifier = Modifier.size(40.dp).clip(CircleShape).background(androidx.compose.ui.graphics.Color(0xFFFF7A00)).padding(8.dp))
+                                Text(text = (userName.split(" ").firstOrNull() ?: "U").take(2).uppercase(), modifier = Modifier.size(40.dp).clip(CircleShape).background(androidx.compose.ui.graphics.Color(0xFF03989F)).padding(8.dp))
                             }
                         )
                     } else {
-                        Text(text = (userName.split(" ").firstOrNull() ?: "U").take(2).uppercase(), modifier = Modifier.size(40.dp).clip(CircleShape).background(androidx.compose.ui.graphics.Color(0xFFFF7A00)).padding(8.dp))
+                        Text(text = (userName.split(" ").firstOrNull() ?: "U").take(2).uppercase(), modifier = Modifier.size(40.dp).clip(CircleShape).background(androidx.compose.ui.graphics.Color(0xFF03989F)).padding(8.dp))
                     }
                     Column(modifier = Modifier.padding(start = 8.dp)) {
                         Text(userName)

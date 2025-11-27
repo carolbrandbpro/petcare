@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #FF7A00;
-  --color-secondary: #FFC946;
+  --color-primary: #03989F;
+  --color-secondary: #FFDE59;
   --color-black: #0A0A0A;
   --color-gray: #F5F5F5;
   --color-white: #FFFFFF;
@@ -20,7 +20,7 @@ body { font-family: Inter, system-ui, Arial; }
 .mobile-only { display: none; }
 .desktop-only { display: flex; }
 
-.side-menu { position: fixed; top: 0; left: 0; height: 100vh; background: var(--color-primary); color: #fff; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); padding-top: 6px; z-index: 1000; }
+.side-menu { position: fixed; top: 0; left: 0; height: 100vh; background: var(--color-primary); color: #fff; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); padding-top: 6px; padding-bottom: 8px; z-index: 1000; }
 .side-menu.expanded { width: 240px; }
 .side-menu.collapsed { width: 64px; }
 .side-header { display:flex; align-items:center; gap:10px; padding:12px; margin:6px 8px; background: rgba(255,255,255,0.15); border-radius:8px; }
@@ -74,6 +74,60 @@ body { font-family: Inter, system-ui, Arial; }
 @media (max-width: 480px) {
   .app-title { font-size: 16px; }
   .app-nav a, .app-nav button { padding: 4px 6px; }
+}
+
+/* Adaptive side menu by viewport height (no scrollbar) */
+@media (max-height: 800px) {
+  .side-menu.expanded { width: 220px; }
+  .app-shell.menu-expanded > header { margin-left: 220px; }
+  .app-shell.menu-expanded > main { margin-left: 220px; }
+  .side-header { padding: 10px; gap: 8px; }
+  .side-header .avatar { width: 40px; height: 40px; }
+  .side-user-name { font-size: 14px; }
+  .side-user-email { font-size: 11px; }
+  .side-item { padding: 7px 9px; margin: 3px 6px; }
+  .side-icon { width: 20px; height: 20px; }
+  .side-icon svg, .nav-icon svg { width: 16px; height: 16px; }
+  .side-label { font-size: 14px; }
+}
+@media (max-height: 700px) {
+  .side-menu.expanded { width: 210px; }
+  .app-shell.menu-expanded > header { margin-left: 210px; }
+  .app-shell.menu-expanded > main { margin-left: 210px; }
+  .side-header { padding: 8px; gap: 6px; margin: 4px 6px; }
+  .side-header .avatar { width: 36px; height: 36px; }
+  .side-user-name { font-size: 13px; }
+  .side-user-email { font-size: 10px; }
+  .side-item { padding: 6px 8px; margin: 3px 6px; }
+  .side-icon { width: 18px; height: 18px; }
+  .side-icon svg, .nav-icon svg { width: 15px; height: 15px; }
+  .side-label { font-size: 13px; }
+}
+@media (max-height: 600px) {
+  .side-menu.expanded { width: 200px; }
+  .app-shell.menu-expanded > header { margin-left: 200px; }
+  .app-shell.menu-expanded > main { margin-left: 200px; }
+  .side-header { padding: 6px; gap: 6px; margin: 4px 6px; }
+  .side-header .avatar { width: 32px; height: 32px; }
+  .side-user-name { font-size: 12px; }
+  .side-user-email { display: none; }
+  .side-item { padding: 5px 7px; margin: 3px 6px; }
+  .side-icon { width: 18px; height: 18px; }
+  .side-icon svg, .nav-icon svg { width: 14px; height: 14px; }
+  .side-label { font-size: 12px; }
+}
+@media (max-height: 540px) {
+  .side-menu.expanded { width: 192px; }
+  .app-shell.menu-expanded > header { margin-left: 192px; }
+  .app-shell.menu-expanded > main { margin-left: 192px; }
+  .side-header { padding: 6px; gap: 6px; margin: 4px 6px; }
+  .side-header .avatar { width: 28px; height: 28px; }
+  .side-user-name { font-size: 12px; }
+  .side-user-email { display: none; }
+  .side-item { padding: 4px 6px; margin: 2px 6px; }
+  .side-icon { width: 16px; height: 16px; }
+  .side-icon svg, .nav-icon svg { width: 13px; height: 13px; }
+  .side-label { font-size: 11px; }
 }
 
 .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.38); z-index: 900; }
