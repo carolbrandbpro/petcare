@@ -42,6 +42,7 @@ import coil.request.ImageRequest
 import com.petcare.api.baseUrl
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ButtonDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,7 +117,14 @@ fun DashboardScreen(onLogout: () -> Unit, onAddPet: () -> Unit, onShare: () -> U
                     navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
-            Button(onClick = { showSheet = true }, modifier = Modifier.padding(top = 12.dp)) { Icon(Icons.Default.Add, contentDescription = null); Text("Adicionar Novo Pet +") }
+            Button(
+                onClick = { showSheet = true },
+                modifier = Modifier.padding(top = 12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
+                )
+            ) { Icon(Icons.Default.Add, contentDescription = null); Text("Adicionar Novo Pet +") }
             if (showSheet) {
                 ModalBottomSheet(onDismissRequest = { showSheet = false }) {
                     Column(modifier = Modifier.padding(16.dp)) {

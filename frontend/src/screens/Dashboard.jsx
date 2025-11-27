@@ -16,7 +16,7 @@ export default function Dashboard(){
       <section className="card" style={{display:'grid', gap:10}}>
         <div style={{fontSize:18, fontWeight:700, color:'var(--color-primary)'}}>Meus Pets</div>
         <div style={{fontSize:15, color:'#222'}}>Você ainda não registrou seu pet</div>
-        <button onClick={()=>setShowAddPetSheet(true)} className="btn btn-primary" style={{width:240, textAlign:'center'}}>ADICIONAR NOVO PET  +</button>
+        <button onClick={()=>setShowAddPetSheet(true)} className="btn btn-secondary" style={{width:240, textAlign:'center'}}>ADICIONAR NOVO PET  +</button>
       </section>
 
       <section style={{background:'#f3f3f3', padding:14, borderRadius:12}}>

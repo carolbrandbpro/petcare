@@ -38,6 +38,7 @@ body { font-family: Inter, system-ui, Arial; }
 
 .btn { padding: 8px 12px; border-radius: 8px; border: 1px solid transparent; }
 .btn-primary { background: var(--color-primary); color: #fff; }
+.btn-secondary { background: var(--color-secondary); color: #000; }
 .btn-danger { background: #ffe6e6; color: #a00; }
 .btn-outline { background: #fff; border-color: #ddd; color: #000; }
 .card { background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.08); padding:16px; }
