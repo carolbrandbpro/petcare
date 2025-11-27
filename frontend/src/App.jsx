@@ -33,7 +33,7 @@ export default function App(){
   const [isMobile, setIsMobile] = useState(false);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchDeltaX, setTouchDeltaX] = useState(0);
-  const isLoginRoute = (typeof window !== 'undefined') && ([ '/', '/login', '/register' ].includes(window.location.pathname));
+  const isLoginRoute = (typeof window !== 'undefined') && ([ '/login', '/register' ].includes(window.location.pathname));
   useEffect(()=>{ 
     const t = localStorage.getItem('token');
     const u = localStorage.getItem('user');
