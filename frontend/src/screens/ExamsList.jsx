@@ -39,16 +39,19 @@ export default function ExamsList(){
             <div style={{marginTop:8}}>
               <div style={{fontSize:12, color:'#555'}}>Anexos</div>
               <div style={{display:'flex', gap:12, flexWrap:'wrap'}}>
-                {i.files.map(f=> (
+                {i.files.map(f=> {
+                  const abs = (u)=> (u && u.startsWith('/')) ? `${api.defaults.baseURL||''}${u}` : u;
+                  const href = abs(f.url);
+                  return (
                   <div key={f.name} style={{display:'grid', gap:6, alignContent:'start'}}>
                     {String(f.mime||'').startsWith('image/') ? (
-                      <a href={f.url} target="_blank" rel="noreferrer"><img src={f.url} alt={f.name} style={{width:120, height:90, objectFit:'cover', borderRadius:8, border:'1px solid #eee'}} /></a>
+                      <a href={href} target="_blank" rel="noreferrer"><img src={href} alt={f.name} style={{width:120, height:90, objectFit:'cover', borderRadius:8, border:'1px solid #eee'}} /></a>
                     ) : (
-                      <a href={f.url} target="_blank" rel="noreferrer" style={{fontSize:12, background:'#fff', border:'1px solid #ddd', padding:'6px 10px', borderRadius:8, display:'inline-block'}}>{f.name}</a>
+                      <a href={href} target="_blank" rel="noreferrer" style={{fontSize:12, background:'#fff', border:'1px solid #ddd', padding:'6px 10px', borderRadius:8, display:'inline-block'}}>{f.name}</a>
                     )}
                     <button onClick={async()=>{ const r=await api.delete(`/api/exams/${i.id}/files`, { data: { name: f.name }}); setItems(items.map(x=>x.id===i.id?r.data:x)); }} style={{fontSize:12, background:'#ffe6e6', color:'#a00', padding:'6px 10px', borderRadius:8}}>Remover</button>
                   </div>
-                ))}
+                )})}
               </div>
             </div>
           )}
