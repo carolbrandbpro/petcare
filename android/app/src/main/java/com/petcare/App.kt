@@ -3,6 +3,7 @@ package com.petcare
 import android.content.Context
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +18,7 @@ import com.petcare.ui.DashboardScreen
 import com.petcare.ui.AddPetScreen
 import com.petcare.ui.ShareScreen
 import com.petcare.ui.LoginScreen
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun PetCareApp() {
@@ -27,7 +29,11 @@ fun PetCareApp() {
         token = ctx.getSharedPreferences("petcare", Context.MODE_PRIVATE).getString("token", "") ?: ""
         if (token.isEmpty()) nav.navigate("login") else nav.navigate("dashboard")
     }
-    MaterialTheme {
+    val colors = lightColorScheme(
+        primary = Color(0xFF03989F),
+        secondary = Color(0xFFFFDE59)
+    )
+    MaterialTheme(colorScheme = colors) {
         Surface { 
             NavHost(navController = nav, startDestination = "login") {
                 composable("login") {

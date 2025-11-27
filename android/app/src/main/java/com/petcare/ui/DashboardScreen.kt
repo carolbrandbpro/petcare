@@ -40,6 +40,8 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.petcare.api.baseUrl
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,7 +107,15 @@ fun DashboardScreen(onLogout: () -> Unit, onAddPet: () -> Unit, onShare: () -> U
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top
         ) {
-            TopAppBar(title = { Text("Olá ${userName.split(" ").firstOrNull() ?: "Usuário"}") }, navigationIcon = { Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu") })
+            TopAppBar(
+                title = { Text("Olá ${userName.split(" ").firstOrNull() ?: "Usuário"}") },
+                navigationIcon = { Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
             Button(onClick = { showSheet = true }, modifier = Modifier.padding(top = 12.dp)) { Icon(Icons.Default.Add, contentDescription = null); Text("Adicionar Novo Pet +") }
             if (showSheet) {
                 ModalBottomSheet(onDismissRequest = { showSheet = false }) {
