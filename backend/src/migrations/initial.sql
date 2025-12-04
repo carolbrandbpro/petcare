@@ -34,6 +34,11 @@ CREATE TABLE IF NOT EXISTS pets (
   avatar_url text,
   created_at timestamptz DEFAULT now()
 );
+ALTER TABLE pets ADD COLUMN IF NOT EXISTS coat text;
+ALTER TABLE pets ADD COLUMN IF NOT EXISTS color text;
+ALTER TABLE pets ADD COLUMN IF NOT EXISTS neutered boolean;
+ALTER TABLE pets ADD COLUMN IF NOT EXISTS deceased boolean;
+ALTER TABLE pets ADD COLUMN IF NOT EXISTS pedigree text;
 
 CREATE TABLE IF NOT EXISTS vaccine_catalog (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
