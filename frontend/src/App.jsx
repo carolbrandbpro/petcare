@@ -73,7 +73,11 @@ export default function App(){
   function logout(){ localStorage.removeItem('token'); localStorage.removeItem('user'); delete axios.defaults.headers.common['Authorization']; setUser(null); }
   return (
     <div className={`app-shell ${isLoginRoute ? 'login-shell' : (isSideMenuOpen ? 'menu-expanded' : 'menu-collapsed')}`} style={{fontFamily:'Inter, system-ui, Arial', padding:20}}>
-      {/* header removido conforme pedido */}
+      {!api.defaults.baseURL && (
+        <div style={{background:'#fffbe6', border:'1px solid #ffe58f', color:'#614700', padding:'10px 12px', borderRadius:8, marginBottom:12, fontSize:13}}>
+          Para usar online, configure a API: defina <code>VITE_API_URL</code> no GitHub Secrets e publique.
+        </div>
+      )}
       {user && (
         <aside className={`side-menu ${isSideMenuOpen ? 'expanded' : 'collapsed'}`}
           onTouchStart={(e)=>{ if(!isMobile || !isSideMenuOpen) return; setTouchStartX(e.touches[0].clientX); setTouchDeltaX(0); }}
