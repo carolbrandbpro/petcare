@@ -109,7 +109,7 @@ export default function Dashboard(){
         <button className="mobile-only btn btn-outline" aria-label="Abrir menu" onClick={()=>{ const e = new Event('open-menu'); window.dispatchEvent(e); }}>
           <span className="nav-icon">≡</span>
         </button>
-        <div style={{fontSize:22, fontWeight:700, color:'var(--color-primary)'}}>Olá {user?.name?.split(' ')[0] || 'Usuário'}</div>
+        <div style={{fontSize:22, fontWeight:700, color:'var(--color-primary)'}}>Olá 👋 {user?.name?.split(' ')[0] || 'Usuário'}</div>
       </div>
 
       <section className="card" style={{display:'grid', gap:10}}>
@@ -144,7 +144,7 @@ export default function Dashboard(){
                 </div>
               </div>
             ))}
-            <button onClick={()=>setShowAddPetSheet(true)} className="btn btn-secondary" style={{width:60, height:60, borderRadius:30, display:'grid', placeItems:'center'}}>+</button>
+            <button onClick={()=>setShowAddPetSheet(true)} className="btn btn-secondary" style={{width:64, height:64, borderRadius:32, display:'grid', placeItems:'center'}}>+</button>
           </div>
         )}
       </section>
@@ -219,6 +219,7 @@ export default function Dashboard(){
           </div>
         </>
       )}
+      <div style={{textAlign:'center', color:'#888', fontSize:12, marginTop:16}}>PetCare • publicado via GitHub Pages</div>
     </div>
   );
 }
