@@ -28,6 +28,8 @@ jobs:
         run: npm --prefix frontend ci
       - name: Build frontend
         run: npm --prefix frontend run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
