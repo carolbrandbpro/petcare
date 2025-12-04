@@ -19,12 +19,27 @@ export function requireAuth(req,res,next){
 }
 
 router.post('/', requireAuth, async (req,res)=>{
-  const { name, species, breed, birth_date } = req.body;
-  const r = await pool.query(
-    `INSERT INTO pets (owner_id, name, species, breed, birth_date) VALUES ($1,$2,$3,$4,$5) RETURNING *`,
-    [req.user.id, name, species, breed, birth_date]
-  );
-  res.status(201).json(r.rows[0]);
+  try{
+    const { name, species, breed } = req.body;
+    if(!name) return res.status(400).json({ error: 'missing_name' });
+    const sex = (req.body.sex || null);
+    const coat = (req.body.coat || null);
+    const color = (req.body.color || null);
+    const neutered = (req.body.neutered ?? null);
+    const birth_date = (req.body.birth_date ? req.body.birth_date : null);
+    const microchip = (req.body.microchip || null);
+    const deceased = (req.body.deceased ?? null);
+    const pedigree = (req.body.pedigree || null);
+    const r = await pool.query(
+      `INSERT INTO pets (owner_id, name, species, breed, birth_date, sex, microchip, coat, color, neutered, deceased, pedigree)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+      [req.user.id, name, species || null, breed || null, birth_date, sex, microchip, coat, color, neutered, deceased, pedigree]
+    );
+    res.status(201).json(r.rows[0]);
+  }catch(err){
+    console.error('create pet error', err?.message);
+    res.status(500).json({ error: 'create_failed' });
+  }
 });
 
 router.get('/', requireAuth, async (req,res)=>{
@@ -34,6 +49,30 @@ router.get('/', requireAuth, async (req,res)=>{
 
 router.get('/:id', requireAuth, async (req,res)=>{
   const r = await pool.query('SELECT * FROM pets WHERE id=$1', [req.params.id]);
+  res.json(r.rows[0]);
+});
+
+router.put('/:id', requireAuth, async (req,res)=>{
+  const petId = req.params.id;
+  const pet = await pool.query('SELECT id, owner_id FROM pets WHERE id=$1',[petId]);
+  const row = pet.rows[0];
+  if(!row) return res.status(404).json({error:'not_found'});
+  if(row.owner_id !== req.user.id) return res.status(403).json({error:'forbidden'});
+  const name = req.body.name;
+  const species = req.body.species;
+  const breed = req.body.breed;
+  const birth_date = (req.body.birth_date ? req.body.birth_date : null);
+  const sex = (req.body.sex || null);
+  const microchip = (req.body.microchip || null);
+  const coat = (req.body.coat || null);
+  const color = (req.body.color || null);
+  const neutered = (req.body.neutered ?? null);
+  const deceased = (req.body.deceased ?? null);
+  const pedigree = (req.body.pedigree || null);
+  const r = await pool.query(
+    `UPDATE pets SET name=$2, species=$3, breed=$4, birth_date=$5, sex=$6, microchip=$7, coat=$8, color=$9, neutered=$10, deceased=$11, pedigree=$12 WHERE id=$1 RETURNING *`,
+    [petId, name, species, breed, birth_date, sex, microchip, coat, color, neutered, deceased, pedigree]
+  );
   res.json(r.rows[0]);
 });
 
@@ -54,6 +93,20 @@ router.post('/:id/avatar', requireAuth, async (req,res)=>{
   const publicUrl = `/uploads/pets/${petId}.jpg`;
   await pool.query('UPDATE pets SET avatar_url=$2 WHERE id=$1',[petId, publicUrl]);
   res.json({ avatar_url: publicUrl });
+});
+
+router.delete('/:id', requireAuth, async (req,res)=>{
+  const petId = req.params.id;
+  const q = await pool.query('SELECT id, owner_id, avatar_url FROM pets WHERE id=$1',[petId]);
+  const row = q.rows[0];
+  if(!row) return res.status(404).json({error:'not_found'});
+  if(row.owner_id !== req.user.id) return res.status(403).json({error:'forbidden'});
+  await pool.query('DELETE FROM pets WHERE id=$1',[petId]);
+  if(row.avatar_url && row.avatar_url.startsWith('/uploads/pets/')){
+    const file = path.join(process.cwd(), row.avatar_url.replace(/^\//,''));
+    try{ fs.unlinkSync(file); }catch{}
+  }
+  res.json({ ok: true });
 });
 
 export default router;

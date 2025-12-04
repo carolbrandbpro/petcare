@@ -25,7 +25,7 @@ export default function FleaTickList(){
     <div style={{display:'grid', gap:12}}>
       <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
         <div style={{fontSize:18, fontWeight:600}}>Antipulgas e Carrapatos</div>
-        <a href="/fleas/new" style={{background:'#FF7A00', color:'#fff', padding:'8px 12px', borderRadius:8}}>Adicionar</a>
+        <a href="/fleas/new" className="btn btn-primary">Adicionar</a>
       </div>
       {!petId && <div style={{color:'#c00'}}>Informe o Pet ID no topo.</div>}
       {loading && <div>Carregando...</div>}
